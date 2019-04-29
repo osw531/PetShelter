@@ -1,3 +1,4 @@
+<%@page import="com.aroundog.model.domain.LostComment"%>
 <%@page import="java.util.Collections"%>
 <%@page import="com.aroundog.model.domain.LostBoardImg"%>
 <%@page import="com.aroundog.commons.Pager"%>
@@ -13,6 +14,9 @@
    }
    if(request.getAttribute("thumbList")!=null){
       List<LostBoardImg> thumbList = (List)request.getAttribute("thumbList");
+   }
+   if(request.getAttribute("lcList")!=null){
+	   List<LostComment> lcList = (List)request.getAttribute("lcList");
    }
 %>
 <!DOCTYPE html>
@@ -32,6 +36,7 @@ $(function(){
 </script>
 </head>
 <body>
+<%@include file="/user/inc/header.jsp" %>
    <header id="header" id="home">
       <div class="container main-menu">
          <div class="row align-items-center justify-content-between d-flex">

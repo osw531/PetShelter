@@ -2,6 +2,9 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
 	Member member=(Member)request.getSession().getAttribute("member");
+/* 	if(member != null){
+		out.print(member.getMember_id());
+	} */
 %>
 <header id="header" id="home">
    <div class="container main-menu">
@@ -19,7 +22,7 @@
           <li class="menu-has-children"><a href="">Board</a>
             <ul>
             	<li><a href="/user/freeboards">Free board</a></li>
-            	<li><a href="">Lost board</a></li>
+            	<li><a href="/user/lostboard/lostboardlist">Lost board</a></li>
 
             </ul>
           </li>

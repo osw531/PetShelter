@@ -33,7 +33,6 @@
 </head>
 <body>
 <%@include file="/user/inc/header.jsp" %>
-
 	<!-- start banner Area -->
 	<section class="banner-area relative" id="home">
 		<div class="container">

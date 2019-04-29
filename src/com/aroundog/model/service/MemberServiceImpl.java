@@ -36,9 +36,9 @@ public class MemberServiceImpl implements MemberService{
 	
 	public Member select(int member_id) throws UserNotFoundException{
 		Member member=memberDAO.select(member_id);
-		if(member==null) {
-			throw new UserNotFoundException("존재하지 않는 유저입니다.");
-		}
+		
+		  if(member==null) { throw new UserNotFoundException("존재하지 않는 유저입니다."); }
+		 
 		return memberDAO.select(member_id); //예외처리 할 사람 하기.. 0반환..
 	}
 
