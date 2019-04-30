@@ -18,7 +18,7 @@ body, html {
   cursor: pointer;
   padding: 14px 16px;
   font-size: 17px;
-  width: 16.6%;
+  width: 14.2857%;
 }
 
 .tablink:hover {

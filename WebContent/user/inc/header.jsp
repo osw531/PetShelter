@@ -2,9 +2,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
 	Member member=(Member)request.getSession().getAttribute("member");
-/* 	if(member != null){
-		out.print(member.getMember_id());
-	} */
 %>
 <header id="header" id="home">
    <div class="container main-menu">
@@ -15,8 +12,8 @@
       <nav id="nav-menu-container">
         <ul class="nav-menu">
           <li class="menu-active"><a href="/user/index.jsp">Home</a></li>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="cats.html">Notice</a></li>
+          <li><a href="/user/about.jsp">About Us</a></li>
+          <li><a href="/user/notices">Notice</a></li>
           <li><a href="dogs.html">Adoption</a></li>        
           
           <li class="menu-has-children"><a href="">Board</a>

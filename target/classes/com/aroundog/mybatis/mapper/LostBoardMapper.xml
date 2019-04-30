@@ -20,7 +20,7 @@
       <result column="lati" property="lati"/>
       <result column="longi" property="longi"/>
       <association column="type_id" property="type" javaType="Type" select="Type.select"></association>
-      <!-- <association column="member_id" property="member" javaType="Member" select="Member.select"></association> -->
+      <association column="member_id" property="member" javaType="Member" select="Member.select"></association>
    </resultMap>
    
 

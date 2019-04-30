@@ -351,8 +351,6 @@ function goList(){
 								<a class="primary-btn text-uppercase" onClick="insertComment()">Post Comment</a>	
 							</form>
 						</div>
-						
-						
 						<form name="form-edit">
 							<div>
 								<input type="button" class="primary-btn float-right" value="목록으로" onClick="goList()"></button>

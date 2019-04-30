@@ -1085,6 +1085,22 @@ h1, h2, h3, h4, h5, h6 {
   min-width: 800px;
 }
 /* Å×ÀÌºí css  */
+.progress-table .notice_id {
+  width: 12%;
+  padding-left: 30px;
+}
+.progress-table .title-notice {
+  width: 53%;
+  align-items: center;
+}
+.progress-table .regdate-notice {
+  width: 20%;
+  padding-right: 50px;
+}
+.progress-table .hit-notice {
+  width: 15%;
+  padding-right: 50px;
+}
 .progress-table .freeboard_id {
   width: 12%;
   padding-left: 30px;
@@ -1112,7 +1128,7 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
 }
 
-.progress-table .table-head .freeboard_id, .progress-table .table-head .writer, .progress-table .table-head .title, .progress-table .table-head .regdate, .progress-table .table-head .hit {
+.progress-table .table-head .freeboard_id .notice_id, .progress-table .table-head .writer .title-notice, .progress-table .table-head .title .hit-notice, .progress-table .table-head .regdate .regdate-notice, .progress-table .table-head .hit {
   color: #222222;
   line-height: 40px;
   text-transform: uppercase;
@@ -1125,7 +1141,7 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
 }
 
-.progress-table .table-head .freeboard_id, .progress-table .table-head .writer, .progress-table .table-head .title, .progress-table .table-head .regdate, .progress-table .table-head .hit {
+.progress-table .table-head .freeboard_id .regdate-notice, .progress-table .table-head .writer .notice_id, .progress-table .table-head .title .title-notice, .progress-table .table-head .regdate .hit-notice, .progress-table .table-head .hit {
   display: flex;
   align-items: center;
 }
@@ -3906,6 +3922,8 @@ body.mobile-nav-active #mobile-nav-toggle {
   .comments-area .comment-list .single-comment .comment {
     font-size: 10px;
   }
+  
+
 }
 
 .comments-area .thumb {

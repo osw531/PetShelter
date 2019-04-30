@@ -97,6 +97,7 @@ function paging(freeboardList, pager){
 <button class="tablink" type="button"><i class="far fa-comment-alt" 	style="font-size:20px"></i>  게시판관리</button>
 <button class="tablink" type="button"><i class="fas fa-dog" style="font-size:20px"></i>  입양게시물관리</button>
 <button class="tablink" type="button"><i class="fas fa-dog" style="font-size:20px"></i>  임보게시판관리</button>
+<button class="tablink" type="button" onclick="openPage('Notice', this, 'light-gray')"><i class="fas fa-dog" style="font-size:20px"></i>  공지사항관리</button>
 </form>
 
 <div id="Board" class="tabcontent">

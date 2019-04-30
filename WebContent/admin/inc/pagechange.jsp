@@ -18,6 +18,9 @@ $(function(){
 	$($("button")[5]).click(function(){
 		lostboardList();
 	});
+	$($("button")[6]).click(function(){
+		noticeList();
+	});
 });
 
 function openPage(pageName,elmnt,color) {
@@ -50,4 +53,7 @@ function adoptManagerList(){
 }
 function lostboardList(){
    location.href="/admin/lostboardList";
+}
+function noticeList(){
+   location.href="/admin/notice";
 }

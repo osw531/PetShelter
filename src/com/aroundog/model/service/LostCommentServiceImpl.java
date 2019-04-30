@@ -16,6 +16,9 @@ public class LostCommentServiceImpl implements LostCommentService{
 	@Autowired
 	private LostCommentDAO lostCommentDAO;
 	
+	@Autowired
+	private LostCommentDAO dao;
+	
 	@Override
 	public void insert(LostComment lostComment) throws RegistFailException{
 		int result = lostCommentDAO.insert(lostComment);
@@ -45,11 +48,11 @@ public class LostCommentServiceImpl implements LostCommentService{
 	}
 
 	@Override
-	public void deleteByLostboardId(int lostboard_id) throws DeleteFailException{
-		int result = lostCommentDAO.deleteByLostboardId(lostboard_id);
-		if(result==0) {
-			throw new DeleteFailException("삭제 실패 byLostBoardId");
-		}
+	public void deleteByLostBoardId(int lostboard_id){
+		int result = lostCommentDAO.deleteByLostBoardId(lostboard_id);
+		//댓글이 0개일때 삭제하면 result가 0이나옴
+		  if(result==0) { throw new DeleteFailException("삭제 실패 byLostBoardId"); }
+		 
 		
 	}
 
@@ -67,5 +70,9 @@ public class LostCommentServiceImpl implements LostCommentService{
 		if(result ==0) {
 			throw new DeleteFailException("삭제 실패 by lostcomment_id");
 		}
+	}
+	
+	public List select(int lostboard_id) {
+		return dao.select(lostboard_id);
 	}
 }

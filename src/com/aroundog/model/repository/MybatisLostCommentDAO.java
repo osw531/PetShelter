@@ -13,6 +13,7 @@ public class MybatisLostCommentDAO implements LostCommentDAO{
 	
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
+	
 	@Override
 	public int insert(LostComment lostComment) {
 		return sqlSessionTemplate.insert("LostComment.insert", lostComment);
@@ -30,16 +31,22 @@ public class MybatisLostCommentDAO implements LostCommentDAO{
 		return sqlSessionTemplate.insert("LostComment.commentAdd", lostComment);
 	}
 	@Override
-	public int deleteByLostboardId(int lostboard_id) {
-		return sqlSessionTemplate.delete("LostComment.deleteByLostboardId",lostboard_id);
-	}
-	@Override
 	public int deleteByTeam(int team) {
 		return sqlSessionTemplate.delete("LostComment.deleteByTeam",team);
 	}
 	@Override
 	public int deleteByCommentId(int lostcomment_id) {
 		return sqlSessionTemplate.delete("LostComment.deleteByCommentId", lostcomment_id);
+	}
+	
+	/* 包府磊 */
+	public List select(int lostboard_id) {
+		return sqlSessionTemplate.selectList("LostComment.select", lostboard_id);
+	}
+	/*包府磊 + 蜡历 */
+	@Override
+	public int deleteByLostBoardId(int lostboard_id) {
+		return sqlSessionTemplate.delete("LostComment.deleteByLostboardId",lostboard_id);
 	}
 
 }

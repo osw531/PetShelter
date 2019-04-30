@@ -251,7 +251,7 @@
                   <label for="note">사진이 있다면 첨부해주세요!</label> <br> <label
                      for="note">▶최대 3개</label> <br>
                       <input type="file"   name="myFile" multiple /> <input type="button" name="regist"
-                     value="제보하기" class="primary-btn float-right" /> <input
+                     value="작성하기" class="primary-btn float-right" /> <input
                      type="button" name="list" value="목록으로"
                      class="primary-btn float-right" />
                </div>

@@ -9,7 +9,8 @@ public interface LostCommentService {
 	public List selectAll();
 	public void delete(int lostcomment_id);
 	public void commentAdd(LostComment lostComment);
-	public void deleteByLostboardId(int lostboard_id);
+	public void deleteByLostBoardId(int lostboard_id);
 	public void deleteByTeam(int team);
 	public void deleteByCommentId(int lostcomment_id);
+	public List select(int lostboard_id);	
 }

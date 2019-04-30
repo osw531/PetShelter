@@ -21,12 +21,14 @@ import com.aroundog.common.exception.DeleteFailException;
 import com.aroundog.commons.Pager;
 import com.aroundog.model.domain.Admin;
 import com.aroundog.model.domain.FreeBoard;
+import com.aroundog.model.domain.Notice;
 import com.aroundog.model.domain.Report;
 import com.aroundog.model.domain.ReportImg;
 import com.aroundog.model.service.AdminService;
 import com.aroundog.model.service.AdoptService;
 import com.aroundog.model.service.AdoptboardService;
 import com.aroundog.model.service.FreeBoardService;
+import com.aroundog.model.service.NoticeService;
 import com.aroundog.model.service.ReportService;
 
 @Controller
@@ -42,6 +44,8 @@ public class AdminController {
 	private AdoptboardService adoptboardService;
 	@Autowired
     private AdoptService adoptService;
+	@Autowired
+	private NoticeService noticeService;
 	private Pager pager=new Pager();
 	
 
@@ -91,6 +95,7 @@ public class AdminController {
 	//--------------------------지영이 파트 끝----------------------------------------------------------
 	//Report 관련 ---------------------------------------------#   
 	   
+	//report 제보글 게시판 보기
 	   @RequestMapping(value="/reports",method=RequestMethod.GET)
 	   public ModelAndView reportList(HttpServletRequest request) {   
 	      List reportList=reportService.selectAll();//모델앤뷰로 리스트 반환하고.. jsp에서 리스트 받아서 목록 출력!!
@@ -101,6 +106,7 @@ public class AdminController {
 	      return mav;
 	   } 
 	   
+	   //게시판 상세보기
 	   @RequestMapping(value="/reports/{report_id}",method=RequestMethod.GET) 
 	   public ModelAndView select(@PathVariable("report_id") int report_id) {   
 	      ModelAndView mav = new ModelAndView("admin/report/detail"); 
@@ -109,6 +115,7 @@ public class AdminController {
 	      return mav;
 	   }
 	   
+	   //게시판에 첨부된 이미지 불러오기
 	   @RequestMapping(value="/reportsimg/{report_id}",method=RequestMethod.GET)
 	   @ResponseBody
 	   public String selectImg(@PathVariable("report_id") int report_id) {
@@ -124,15 +131,13 @@ public class AdminController {
 	      
 	   }
 	   
+	   //게시판 확인여부 
 	   @RequestMapping(value="/reports/check",method=RequestMethod.POST)
 	   public String update(@RequestParam("report_id") int report_id) {
 	      reportService.update(report_id);
 	      return "redirect:/reports";
 	   }
-	   
-	   //#---------------------------------------------Report 관련 끝
-	   
-	   
+   
 	   //#---------------------------------------------Report 관련 끝
 		@RequestMapping(value="/adopts",method=RequestMethod.GET)
 			public ModelAndView adoptList() {   
@@ -142,6 +147,38 @@ public class AdminController {
 			mav.addObject("adoptList", adoptList);
 			return mav;
 		}
+		
+	//-----------------------공지 게시판 시작--------------------------------------------------------------
+	//페이지 가져오기
+	@RequestMapping(value="/admin/notice",method=RequestMethod.GET)
+	public ModelAndView noticeChangePage(@RequestParam(value="currentPage", defaultValue="1" , required=false) int currentPage,HttpServletRequest request) {	
+		ModelAndView mav = new ModelAndView("admin/notice/index");
+		List noticeList=noticeService.selectAll();
+		pager.init(request, noticeList.size());
+		mav.addObject("noticeList", noticeList);
+		mav.addObject("pager", pager);	
+		return mav;
+	}
+	//공지 게시판 등록화면 이동
+	@RequestMapping(value="/admin/notice/registpage",method=RequestMethod.GET)
+	public ModelAndView goNoticeRegistPage() {
+		ModelAndView mav = new ModelAndView("admin/notice/regist");
+		return mav;
+	}
+	//공지 등록
+	@RequestMapping(value="/admin/notice/regist",method=RequestMethod.POST)
+	public String noticeRegist(Notice notice) {
+		noticeService.insert(notice);
+		return "redirect:/admin/notice";
+	}
+	//공지 삭제
+	@RequestMapping(value="/admin/notice/del/{notice_id}",method=RequestMethod.DELETE)
+	@ResponseBody
+	public String noticeDelete(@PathVariable("notice_id") int notice_id) {
+		noticeService.delete(notice_id);
+		return "{\"result\":1,\"msg\":\"1\"}";
+	}
+	//------------------------공지 게시판 끝---------------------------------------------------------------
 	//------------------------자유게시판 시작--------------------------------------------------------------
 	
 	//자유게시판 게시물 1건 삭제

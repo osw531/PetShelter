@@ -9,7 +9,8 @@ public interface LostCommentDAO {
 	public List selectAll();
 	public int delete(int lostcomment_id);
 	public int commentAdd(LostComment lostComment);
-	public int deleteByLostboardId(int lostboard_id);
+	public int deleteByLostBoardId(int lostboard_id);
 	public int deleteByTeam(int team);
 	public int deleteByCommentId(int lostcomment_id);
+	public List select(int lostboard_id);
 }

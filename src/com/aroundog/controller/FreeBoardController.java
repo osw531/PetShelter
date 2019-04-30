@@ -156,16 +156,28 @@ public class FreeBoardController {
 	
 	//검색하기
 	@RequestMapping(value="/user/freeboard/search", method=RequestMethod.GET)
-	public String freeBoardSearch(String category,String searchWord) {
+	public ModelAndView freeBoardSearch(String category,String searchword,HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("user/freeboard/freeboard");
 		System.out.println("서치 들어오니??");
-		System.out.println(category);
-		System.out.println(searchWord);
+		List searchList=null;
+		List fcList=freeCommentService.selectAll();
 		if(category.equals("writer")) {
-			freeBoardService.selectByWriter(searchWord);
+			searchList=freeBoardService.selectByWriter(searchword);
 		}else {		
-			freeBoardService.selectByTitle(searchWord);
+			searchList=freeBoardService.selectByTitle(searchword);
 		}
-		return "";//리스트로 이동
+		pager.init(request, searchList.size());
+		for(int i=0;i<searchList.size();i++) {
+			FreeBoard freeBoard=(FreeBoard)searchList.get(i);
+			int member_id=freeBoard.getMember_id();
+			Member member=memberService.select(member_id);
+			freeBoard.setMember(member);
+		}
+		mav.addObject("freeBoardList", searchList);
+		mav.addObject("fcList", fcList);
+		mav.addObject("pager", pager);
+		
+		return mav;
 	}
 
 	 

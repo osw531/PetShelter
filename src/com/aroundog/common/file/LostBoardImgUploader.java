@@ -19,6 +19,7 @@ public class LostBoardImgUploader {
          try {
             uploadFile = new File(realPath + "/" + filename);
             myFile[i].transferTo(new File(realPath + "/" + filename));
+            filename = fileManager.reNameByHash(uploadFile, realPath);
             if (filename != null) {
                filenameList[i] = filename;
             }
