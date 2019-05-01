@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.aroundog.model.domain.FreeComment;
 import com.aroundog.model.domain.LostComment;
 import com.aroundog.model.service.LostCommentService;
 

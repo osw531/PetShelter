@@ -26,6 +26,21 @@
 <!-- Site Title -->
 <title>Animal Shelter</title>
 <%@ include file="/user/inc/head.jsp"%>
+<style> 
+.banner-areawon {
+  background: url(../img/dog2.jpg) center;
+  background-size: cover;
+}
+
+.banner-areawon .primary-btn {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.banner-areawon .overlay-bg {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+</style>
 <script>
 $(function(){
    $("input[name='write']").click(function(){
@@ -39,7 +54,7 @@ $(function(){
 <%@include file="/user/inc/header.jsp" %>
 
    <!-- start banner Area -->
-   <section class="banner-area relative" id="home">
+   <section class="banner-areawon relative" id="home">
       <div class="overlay overlay-bg"></div>
       <div class="container">
          <div class="row d-flex align-items-center justify-content-center">
@@ -124,9 +139,10 @@ $(function(){
          </div>
       </div>
    </div>
+   <%@include file="/user/inc/tail.jsp"%>
    <!-- start footer Area -->
 	<%@include file="/user/inc/footer.jsp" %>
    <!-- End footer Area -->   
-   <%@include file="/user/inc/tail.jsp"%>
+   
 </body>
 </html>

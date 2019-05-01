@@ -4,7 +4,7 @@
    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
    crossorigin="anonymous"></script>
 <script src="/user/js/vendor/bootstrap.min.js"></script>
-<script   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7s3c6u5G3n7koVQkGfBn_qLQarZjjHlc&callback=myMap" />
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7s3c6u5G3n7koVQkGfBn_qLQarZjjHlc&callback=myMap" />
 <script src="/user/js/easing.min.js"></script>
 <script src="/user/js/hoverIntent.js"></script>
 <script src="/user/js/superfish.min.js"></script>

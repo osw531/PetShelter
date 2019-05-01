@@ -16,9 +16,6 @@ public class LostCommentServiceImpl implements LostCommentService{
 	@Autowired
 	private LostCommentDAO lostCommentDAO;
 	
-	@Autowired
-	private LostCommentDAO dao;
-	
 	@Override
 	public void insert(LostComment lostComment) throws RegistFailException{
 		int result = lostCommentDAO.insert(lostComment);
@@ -73,6 +70,6 @@ public class LostCommentServiceImpl implements LostCommentService{
 	}
 	
 	public List select(int lostboard_id) {
-		return dao.select(lostboard_id);
+		return lostCommentDAO.select(lostboard_id);
 	}
 }

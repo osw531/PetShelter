@@ -3,6 +3,21 @@
 <html lang="zxx" class="no-js">
 <head>
 <%@ include file="/user/inc/head.jsp"%>
+<style>
+.banner-areawon {
+  background: url(../img/dog1.jpg) center;
+  background-size: cover;
+}
+
+.banner-areawon .primary-btn {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.banner-areawon .overlay-bg {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+</style>
 <script>
    //제출 기능 시작 ---------------------------
    $(function() {
@@ -86,45 +101,9 @@
 </script>
 </head>
 <body>
-   <header id="header" id="home">
-      <div class="container main-menu">
-         <div class="row align-items-center justify-content-between d-flex">
-            <div id="logo">
-               <a href="index.html"><img src="/user/img/logo.png" alt="" title="" /></a>
-            </div>
-            <nav id="nav-menu-container">
-               <ul class="nav-menu">
-                  <li class="menu-active"><a href="index.html">Home</a></li>
-                  <li><a href="about.html">About Us</a></li>
-                  <li><a href="cats.html">Cats</a></li>
-                  <li><a href="dogs.html">Dogs</a></li>
-                  <li><a href="volunteer.html">Volunteer</a></li>
-                  <li class="menu-has-children"><a href="">Blog</a>
-                     <ul>
-                        <li><a href="blog-home.html">Blog Home</a></li>
-                        <li><a href="blog-single.html">Blog Single</a></li>
-                     </ul></li>
-                  <li><a href="contact.html">Contact</a></li>
-                  <li class="menu-has-children"><a href="">Dropdown</a>
-                     <ul>
-                        <li><a href="elements.html">Elements</a></li>
-                        <li><a href="#">Item</a></li>
-                        <li class="menu-has-children"><a href="">Level 2</a>
-                           <ul>
-                              <li><a href="#">Item 1</a></li>
-                              <li><a href="#">Item 2</a></li>
-                           </ul></li>
-                     </ul></li>
-               </ul>
-            </nav>
-            <!-- #nav-menu-container -->
-         </div>
-      </div>
-   </header>
-   <!-- #header -->
-
+<%@include file="/user/inc/header.jsp" %>
    <!-- start banner Area -->
-   <section class="banner-area relative" id="home">
+   <section class="banner-areawon relative" id="home">
       <div class="overlay overlay-bg"></div>
       <div class="container">
          <div class="row d-flex align-items-center justify-content-center">

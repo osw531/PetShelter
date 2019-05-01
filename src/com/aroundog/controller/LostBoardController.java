@@ -155,10 +155,12 @@ public class LostBoardController {
 	
 	//게시글 1개 삭제 + 해당 게시글의 댓글 삭제
 	@RequestMapping(value = "/user/lostboard/lostboarddetail/delete/{lostboard_id}", method = RequestMethod.GET)
-	public String delete(@PathVariable("lostboard_id") int lostboard_id) {
+	public String delete(@PathVariable("lostboard_id") int lostboard_id, HttpServletRequest request) {
+		String realPath = request.getServletContext().getRealPath("/data");
+		List<LostBoardImg> oriList = lostBoardService.selectImg(lostboard_id);
 		List list = lostCommentService.select(lostboard_id);
 		lostBoardService.delete(lostboard_id);
-		lostBoardService.deleteImg(lostboard_id);
+		lostBoardService.deleteImg(lostboard_id,oriList,realPath);
 		if(list.size()!=0) {
 			lostCommentService.deleteByLostBoardId(lostboard_id);
 		}
@@ -186,7 +188,7 @@ public class LostBoardController {
 		int lostboard_id = lostBoard.getLostboard_id();
 		List<LostBoardImg> oriList = lostBoardService.selectImg(lostboard_id);
 		lostBoardService.updateLostBoard(lostBoard);
-		lostBoardService.updateLostBoardImg(myFile, oriList, lostBoard, lostBoardImg, realPath);	
+		lostBoardService.updateLostBoardImg(myFile,oriList,lostBoard,realPath,lostboard_id);	
 		return "redirect:/user/lostboard/lostboarddetail/"+lostboard_id;
 	}
 
@@ -237,10 +239,12 @@ public class LostBoardController {
 	}*/
 	@RequestMapping(value="/admin/lostboardDelete/{lostboard_id}", method=RequestMethod.GET)
 	@ResponseBody
-	public String deleteAll(@PathVariable("lostboard_id") int lostboard_id) {
+	public String deleteAll(@PathVariable("lostboard_id") int lostboard_id,HttpServletRequest request) {
+		String realPath = request.getServletContext().getRealPath("/data");
 		List list = lostCommentService.select(lostboard_id);
+		List<LostBoardImg> oriList = lostBoardService.selectImg(lostboard_id);
 		lostBoardService.delete(lostboard_id);
-		lostBoardService.deleteImg(lostboard_id);
+		lostBoardService.deleteImg(lostboard_id,oriList,realPath);
 		if(list.size()!=0) {
 			lostCommentService.deleteByLostBoardId(lostboard_id);
 		}

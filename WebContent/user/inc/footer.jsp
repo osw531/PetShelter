@@ -5,18 +5,20 @@
 			<div class="row pt-120 pb-80">
 				<div class="col-lg-4 col-md-6">
 					<div class="single-footer-widget">
-						<h6>About Us</h6>
-						<p>Abandoned Pet Shelter (APS), founded in 2019,IRS
-							tax-exempt, qualified non-profit charitable organization that
-							rescues and shelters abandoned, abused, and neglected pets,
-							rehabilitates them and finds them new homes. APS is one of the
-							largest no kill animal shelters in Republic of Korea and is
-							devoted to the welfare of all animals.</p>
+						<h6>회사소개</h6>
+						<p>상호명 : (주)ArounDog │ 대표자 : 김민호 </p>
+						<p>센터등록번호 : 제210호  </p>
+						<p>사업자등록번호 : 513-23-00234</p> 
+						<p>법인등록번호 : 110213-1960193</p>
+						<p>통신판매번호 : 제 03-506-299호</p>  
+						<p>상표권출원번호 : 453002342345923</p>
+						<p>고객지원센터 대표번호 : 02-3623-0092</p>
+						<p>FAX : 02-3623-1192</p>
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-6">
 					<div class="single-footer-widget">
-						<h6>Useful Links</h6>
+						<h6>바로가기</h6>
 						<div class="row">
 							<ul class="col footer-nav">
 								<li><a href="/user/index.jsp">Home</a></li>
@@ -31,7 +33,7 @@
 				</div>
 				<div class="col-lg-4  col-md-6">
 					<div class="single-footer-widget mail-chimp">
-						<h6 class="mb-20">Contact Us</h6>
+						<h6 class="mb-20">고객센터</h6>
 						<ul class="list-contact">
 							<li class="flex-row d-flex">
 								<div class="icon">
@@ -39,7 +41,7 @@
 								</div>
 								<div class="detail">
 									<h4>Seoul, Republic of Korea</h4>
-									<p>26, Donhwamun-ro, Jongno-gu,</p>
+									<p>종로구 돈화문로, 26번길</p>
 								</div>
 							</li>
 							<li class="flex-row d-flex">
@@ -47,8 +49,9 @@
 									<span class="lnr lnr-phone-handset"></span>
 								</div>
 								<div class="detail">
-									<h4>010 4193 2678</h4>
-									<p>Mon to Fri 9am to 6 pm</p>
+									<h4>010 - 4193 - 2678</h4>
+									<p>월요일 ~ 금요일 </p>
+									<p>9 : 00 ~ 18 : 00 </p>
 								</div>
 							</li>
 							<li class="flex-row d-flex">
@@ -57,7 +60,7 @@
 								</div>
 								<div class="detail">
 									<h4>support@aroundog.com</h4>
-									<p>Send us your query anytime!</p>
+									<p>문의사항이 있으면 언제든 메일을 보내주세요!</p>
 								</div>
 							</li>
 						</ul>

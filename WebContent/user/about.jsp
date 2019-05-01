@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<meta charset="utf-8"/>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 <head>
@@ -38,6 +37,19 @@
 	text-align:center;
 	margin:auto;
 }
+.banner-areawon {
+  background: url(/user/img/dog1.jpg) center;
+  background-size: cover;
+}
+
+.banner-areawon .primary-btn {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.banner-areawon .overlay-bg {
+  background-color: rgba(0, 0, 0, 0.4);
+}
 </style>
 <script>
 		function myMap() {
@@ -74,11 +86,12 @@
 
 		}
 	</script>
+	
 </head>
 <body>
  <%@include file="/user/inc/header.jsp" %>
 	<!-- start banner Area -->
-	<section class="banner-area relative" id="home">
+	<section class="banner-areawon relative" id="home">
 		<div class="overlay overlay-bg"></div>
 		<div class="container">
 			<div class="row d-flex align-items-center justify-content-center">
@@ -98,14 +111,18 @@
 					<img src="img/about-img.jpg" alt="" style="width: 70%">
 				</div>
 				<div class="col-lg-6 home-about-right no-padding">
-					<h1>Our Mission</h1>
-					<h5>We are here to listen from you deliver exellence</h5>
-					<p>Abandoned Pet Shelter (APS), founded in 2019,IRS tax-exempt,
-						qualified non-profit charitable organization that rescues and
-						shelters abandoned, abused, and neglected pets, rehabilitates them
-						and finds them new homes. APS is one of the largest no kill animal
-						shelters in Republic of Korea and is devoted to the welfare of all
-						animals.</p>
+					<h1></h1>
+					<h4 class="mb-10">‘잠시 집을 잃은 아이’에게 손을 내밀어 보세요. 
+					<br>
+					나로 인해 한 생명의 삶이 바뀌고, 
+					<br>
+					곧 내 삶에 기분 좋은 변화가 생기게 됩니다.
+					<br>
+					가정에서 임시보호 중인 유기견 정보 제공 및 집을 잃은 아이들을 임시 보호하고 있습니다. 
+					<br>
+					강아지 입양에 어려운 점이나 고민이 있으면 글을 남겨주세요.<br> 
+					전문상담사가 항시 대기 중입니다 🙂</h4>
+					<p></p>
 				</div>
 			</div>
 		</div>
@@ -118,8 +135,8 @@
 			<div class="row d-flex justify-content-center">
 				<div class="menu-content pb-60 col-lg-8">
 					<div class="title text-center">
-						<h1 class="mb-10">Introducing our guardians who love dogs</h1>
-						<p>Let me introduce you to the center manager who loves dogs.</p>
+						<h1 class="mb-10">관리자 소개</h1>
+						<p>강아지를 사랑하는 센터 관리자들을 소개합니다</p>
 					</div>
 				</div>
 			</div>
@@ -127,10 +144,10 @@
 				<div class="active-testimonial-carusel">
 					<div class="single-testimonial item">
 						<img class="mx-auto" src="img/min.png" alt="">
-						<p class="desc">He loves dogs and is always interested in
-							problems with abandoned dogs, and he is a responsible manager. As
-							a manager, He is doing his best for the puppies at the center.
-						</h4>
+						<p class="desc">변함없는 사랑으로 아이들을 아끼며 ArounDog 센터 관리 뿐만 아니라 자선 봉사활동, 동물 보호협회, 유기견 공인 보호센터와 협력하여
+						집을 잃은 아이들을 보살피기 위해 헌신하고 있습니다. 
+						<br>
+						10년이 넘는 시간 동안 센터를 운영하고 있으며, 아이들의 부모로써 책임을 다하고 있습니다. 						
 						<h4>Kim Min Ho</h4>
 						<p>CEO at Center</p>
 					</div>
@@ -139,8 +156,6 @@
 						<p class="desc">She loves dogs and is always interested in
 							problems with abandoned dogs, and she is a responsible manager.
 							As a manager, She is doing her best for the puppies at the center.
-						
-						</h4>
 						<h4>Kim Hyeon Hwa</h4>
 						<p>Manager of Center</p>
 					</div>
@@ -149,8 +164,6 @@
 						<p class="desc">She loves dogs and is always interested in
 							problems with abandoned dogs, and she is a responsible manager.
 							As a manager, She is doing her best for the puppies at the center.
-						
-						</h4>
 						<h4>Kwon Ji Young</h4>
 						<p>Manager of Center</p>
 					</div>
@@ -159,7 +172,6 @@
 						<p class="desc">He loves dogs and is always interested in
 							problems with abandoned dogs, and he is a responsible manager. As
 							a manager, He is doing his best for the puppies at the center.
-						</h4>
 						<h4>Hwang Dong Hyeon</h4>
 						<p>Manager of Center</p>
 					</div>
@@ -168,7 +180,6 @@
 						<p class="desc">He loves dogs and is always interested in
 							problems with abandoned dogs, and he is a responsible manager. As
 							a manager, He is doing his best for the puppies at the center.
-						</h4>
 						<h4>Oh Se Won</h4>
 						<p>Manager of Center</p>
 					</div>
@@ -187,27 +198,9 @@
 	<div id="googleMap" style="width: 70%; height: 500px;"></div>
 	<br>
 	<br>
-
 	<!-- start footer Area -->
 	<%@include file="/user/inc/footer.jsp" %>
 	<!-- End footer Area -->
-
-	<script src="js/vendor/jquery-2.2.4.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-		crossorigin="anonymous"></script>
-	<script src="js/vendor/bootstrap.min.js"></script>
-	<script	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7s3c6u5G3n7koVQkGfBn_qLQarZjjHlc&callback=myMap" />
-<!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script> -->
-	<script src="js/easing.min.js"></script>
-	<script src="js/hoverIntent.js"></script>
-	<script src="js/superfish.min.js"></script>
-	<script src="js/jquery.ajaxchimp.min.js"></script>
-	<script src="js/jquery.magnific-popup.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/jquery.nice-select.min.js"></script>
-	<script src="js/mail-script.js"></script>
-	<script src="js/main.js"></script>
+	<%@include file="/user/inc/tail.jsp" %>
 </body>
 </html>

@@ -38,6 +38,20 @@ public class FileManager {
 			return filename;
 		}
 		
+		public void deleteFile(String[] fileList,String dir) {
+			for(int i=0;i<fileList.length;i++) {
+				File file = new File(dir+"/"+fileList[i]);
+				if(file.exists()) {
+					if(file.delete()) {
+						System.out.println(fileList[i]+" 파일 삭제 성공");
+					}else {
+						System.out.println(fileList[i]+" 파일 삭제 실패");
+					}
+				}else {
+					System.out.println("파일이 존재하지 않습니다.");
+				}
+			}
+		}
 		/*
 		public static void main(String[] args) {
 			FileManager fm=new FileManager();

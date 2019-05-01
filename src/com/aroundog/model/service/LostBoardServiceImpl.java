@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.aroundog.common.exception.DeleteFailException;
 import com.aroundog.common.exception.EditFailException;
 import com.aroundog.common.exception.ReportFailException;
+import com.aroundog.common.file.FileManager;
 import com.aroundog.common.file.LostBoardImgUploader;
 import com.aroundog.model.domain.LostBoard;
 import com.aroundog.model.domain.LostBoardImg;
@@ -27,6 +28,7 @@ public class LostBoardServiceImpl implements LostBoardService{
    @Autowired
    private LostCommentDAO dao;
    
+   private FileManager manager = new FileManager();
    private LostBoardImgUploader uploader = new LostBoardImgUploader();
    
    @Override
@@ -115,8 +117,14 @@ public class LostBoardServiceImpl implements LostBoardService{
 	}
 
 	@Override
-	public void deleteImg(int lostboard_id) throws DeleteFailException{
+	public void deleteImg(int lostboard_id,List<LostBoardImg> fileList,String realPath) throws DeleteFailException{
+		String[] oriList = new String[fileList.size()];
+		for(int i=0;i<oriList.length;i++) {
+			String oriName = fileList.get(i).getImg();
+			oriList[i]= oriName;
+		}
 		int result = lostBoardDAO.deleteImg(lostboard_id);
+		manager.deleteFile(oriList, realPath);
 		if(result ==0) {
 			throw new DeleteFailException("삭제 실패");
 		}
@@ -131,21 +139,26 @@ public class LostBoardServiceImpl implements LostBoardService{
 	}
 
 	@Override
-	public void updateLostBoardImg(MultipartFile[] myFile, List<LostBoardImg> oriList,LostBoard lostBoard,LostBoardImg lostBoardImg, String realPath) {
-		String[] imgList = uploader.returnFilename(myFile, lostBoard, realPath);
-		//System.out.println("서비스에서 받은 오리 리스트에 이름은"+oriList.get(0).getImg());
-	      int result = 0;
-	      for(int i=0;i<imgList.length;i++) {
-	         //LostBoardImg lbi = new LostBoardImg();
-	         //String oriName = oriList.get(i).getImg();         
-	         lostBoardImg.setLostboard(lostBoard);
-	         lostBoardImg.setImg(imgList[i]);	      
-	         lostBoardDAO.updateLostBoardImg(lostBoardImg);
-	      }
-		/*
-		 * if (result == 0) { throw new ReportFailException("수정 실패!!"); }
-		 */
+	public void updateLostBoardImg(MultipartFile[] myFile,List<LostBoardImg> fileList,LostBoard lostBoard, String realPath,int lostboard_id) {
 		
+		String[] imgList = uploader.returnFilename(myFile, lostBoard, realPath);
+	      int result = 0;
+	      List<LostBoardImg> list = lostBoardDAO.selectImg(lostboard_id);
+		  for(int i=0;i<imgList.length;i++) {
+			  LostBoardImg lbi = list.get(i);
+			  lbi.setLostboard(lostBoard);
+			  lbi.setImg(imgList[i]);	      
+			  result = lostBoardDAO.updateLostBoardImg(lbi);		     
+	      }		
+		 String[] oriList = new String[fileList.size()];
+		 for(int i=0;i<oriList.length;i++) {
+			String oriName = fileList.get(i).getImg();
+			oriList[i]= oriName;
+			}
+		 manager.deleteFile(oriList, realPath);
+		 if (result == 0) { 
+			  throw new ReportFailException("수정 실패!!"); 
+		}
 	}
 	@Override
 	public LostBoard selectById(int lostboard_id) {
