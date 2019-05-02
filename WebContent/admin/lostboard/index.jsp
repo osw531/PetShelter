@@ -1,3 +1,5 @@
+<%@page import="com.aroundog.commons.Pager"%>
+<%@page import="java.util.Collections"%>
 <%@page import="com.aroundog.model.domain.LostBoard"%>
 <%@page import="com.aroundog.model.domain.FreeBoard"%>
 <%@page import="java.util.List"%>
@@ -5,9 +7,11 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 
 <%
-	Admin admin=(Admin)request.getSession().getAttribute("admin");
-	List<LostBoard> lostboardList = (List)request.getAttribute("lostboardList");
-	LostBoard lostboardSearch = (LostBoard)request.getAttribute("lostboardSearch");
+   Admin admin=(Admin)request.getSession().getAttribute("admin");
+   List<LostBoard> lostboardList = (List)request.getAttribute("lostboardList");
+   LostBoard lostboardSearch = (LostBoard)request.getAttribute("lostboardSearch");
+   Collections.reverse(lostboardList); // 리스트 배열의 순서를 거꾸로 바꿔준다
+   Pager pager=(Pager)request.getAttribute("pager");
 %>  
 
 <!DOCTYPE html>
@@ -36,25 +40,19 @@ integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zF
 function lostboardSearch(){
    var lostboard_id=$("input[name='lostboard_id']").val();
    
-	location.href="/admin/lostboardSearch?lostboard_id="+lostboard_id;
+   location.href="/admin/lostboardSearch?lostboard_id="+lostboard_id;
 }
 function goDetail(lostboard_id){
-	window.open("/admin/lostboard?lostboard_id="+lostboard_id,"detail","width=450, height=600, scrollbars=1, menubar=0, top=100, left=400, location=0, resizable=no")
+   window.open("/admin/lostboard?lostboard_id="+lostboard_id,"detail","width=450, height=600, scrollbars=1, menubar=0, top=100, left=400, location=0, resizable=no")
 }
 function getList(){
-	location.href="/admin/lostboardList";
+   location.href="/admin/lostboardList";
 }
 </script>
 <body>
 <form>
+<%@include file="/admin/inc/tablink.jsp" %>
 <div class="loginName" style="text-align:right"><%=admin.getId() %>님 로그인중</div>
-<button class="tablink" type="button"><i class="fas fa-user-friends" style="font-size:20px"></i>  회원관리</button> 
-<button class="tablink" type="button"><i class="fas fa-bullhorn" style="font-size:20px"></i>  제보관리</button>
-<button class="tablink" type="button"><i class="far fa-edit" style="font-size:20px"></i>  입양신청관리</button>
-<button class="tablink" type="button"><i class="far fa-comment-alt"    style="font-size:20px"></i>  게시판관리</button>
-<button class="tablink" type="button"><i class="fas fa-dog" style="font-size:20px"></i>  입양게시물관리</button>
-<button class="tablink" type="button"><i class="fas fa-dog" style="font-size:20px"></i>  임보게시판관리</button>
-<button class="tablink" type="button"><i class="fas fa-dog" style="font-size:20px"></i>  공지사항관리</button>
 </form>
 
 <div id="AdoptManager" class="tabcontent">
@@ -82,28 +80,53 @@ function getList(){
     
     <form name="detail-form">
     <tbody>
+    
     <%if(lostboardSearch!=null){ %>
-    	<tr>
-	        <td><%= lostboardSearch.getLostboard_id()%></td>
-	        <td><%= lostboardSearch.getTitle()%></td>
-	        <td><%= lostboardSearch.getMember().getName()%></td>
-	        <td><%= lostboardSearch.getRegdate().substring(0,10)%></td>
-	        <td><%= lostboardSearch.getMember().getPhone()%></td>
-	        <td><button class="btn btn-light" onClick="goDetail(<%=lostboardSearch.getLostboard_id() %>)" type="button">상세보기</button></td>
-	      </tr>
+       <tr>
+           <td><%= lostboardSearch.getLostboard_id()%></td>
+           <td><%= lostboardSearch.getTitle()%></td>
+           <td><%= lostboardSearch.getMember().getName()%></td>
+           <td><%= lostboardSearch.getRegdate().substring(0,10)%></td>
+           <td><%= lostboardSearch.getMember().getPhone()%></td>
+           <td><button class="btn btn-light" onClick="goDetail(<%=lostboardSearch.getLostboard_id() %>)" type="button">상세보기</button></td>
+         </tr>
     <%}else{ %>
-	    <%for(int i=0;i<lostboardList.size();i++){ %>
-	    <%LostBoard lostboard = lostboardList.get(i); %> 
-	      <tr>
-	        <td><%= lostboard.getLostboard_id()%></td>
-	        <td><%= lostboard.getTitle()%></td>
-	        <td><%= lostboard.getMember().getName()%></td>
-	        <td><%= lostboard.getRegdate().substring(0,10)%></td>
-	        <td><%= lostboard.getMember().getPhone()%></td>
-	        <td><button class="btn btn-light" onClick="goDetail(<%=lostboard.getLostboard_id() %>)" type="button">상세보기</button></td>
-	      </tr>
-	      <%} %>
+      <%int num=pager.getNum(); %>
+      <%int curPos=pager.getCurPos(); %>
+        <%for(int i=0;i<pager.getPageSize();i++){ %>
+        <%if(num<1)break; %>
+        <%LostBoard lostboard = lostboardList.get(i); %> 
+         <tr>
+            <%=num-- %>
+           <td><%= lostboard.getLostboard_id()%></td>
+           <td><%= lostboard.getTitle()%></td>
+           <td><%= lostboard.getMember().getName()%></td>
+           <td><%= lostboard.getRegdate().substring(0,10)%></td>
+           <td><%= lostboard.getMember().getPhone()%></td>
+           <td><button class="btn btn-light" onClick="goDetail(<%=lostboard.getLostboard_id() %>)" type="button">상세보기</button></td>
+         </tr>
+         <%} %>
       <%} %>
+      <tr>
+         <td colspan="6" align="center">
+         <%if(pager.getFirstPage()-1>0){ %>
+               <a href="/admin/lostboardList?currentPage=<%=pager.getFirstPage()-1%>">◀</a>
+            <%}else{ %>
+               <a href="javascript:alert('첫번째 페이지입니다');">◀</a>
+            <%} %>
+                      
+         <%for(int i=pager.getFirstPage();i<pager.getLastPage();i++){%>
+         <%if(i>pager.getTotalPage())break; %>
+         <a href="/admin/lostboardList?currentPage=<%=i %>">[<%=i %>]</a>                 
+         <%} %>
+            
+         <%if(pager.getLastPage()+1<pager.getTotalPage()){ %>
+               <a href="/admin/lostboardList?currentPage=<%=pager.getLastPage()+1%>">▶</a>
+            <%}else{ %>
+               <a href="javascript:alert('마지막 페이지입니다!');">▶</a>
+            <%} %>
+         </td>
+      </tr>
     </tbody>
     </form> 
     
@@ -112,6 +135,7 @@ function getList(){
       
 
 </div>
+   
    
 </body>
 </html> 

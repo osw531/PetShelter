@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
-	LostBoard lostBoard = (LostBoard)request.getAttribute("lostBoard");
+   LostBoard lostBoard = (LostBoard)request.getAttribute("lostBoard");
 %>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
@@ -43,9 +43,9 @@
             });
       $("input[name='list']").click(function() {
          if(!confirm("수정을 취소하고 목록으로 돌아가시겠어요?")){
-        	 return;
+            return;
          }else{
-        	 location.href="/user/lostboard/lostboardlist";
+            location.href="/user/lostboard/lostboardlist";
            }
       });
    });
@@ -133,7 +133,7 @@
          </div>
          <div class="row justify-content-center">
             <form class="col-lg-9" enctype="multipart/form-data">
-            	<input type="hidden" name="lostboard_id" value="${lostboard_id }"/>
+               <input type="hidden" name="lostboard_id" value="${lostboard_id }"/>
                <input type="hidden" name="member_id" value="1" />
                <div class="form-group">
                   <label for="first-name">제목</label> 

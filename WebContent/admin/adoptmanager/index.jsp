@@ -1,11 +1,13 @@
+<%@page import="com.aroundog.commons.Pager"%>
 <%@page import="java.util.List"%>
 <%@page import="com.aroundog.model.domain.Adoptboard"%>
 <%@page import="com.aroundog.model.domain.Admin"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
-	Admin admin=(Admin)request.getSession().getAttribute("admin");
-	List<Adoptboard> adoptboardList=(List)request.getAttribute("adoptboardList"); 
-	System.out.println("@index.jsp : 넘어온 adoptboardList : "+adoptboardList.size());
+   Admin admin=(Admin)request.getSession().getAttribute("admin");
+   List<Adoptboard> adoptboardList=(List)request.getAttribute("adoptboardList");
+   Pager pager=(Pager)request.getAttribute("pager");   
+   
 %>
 <!DOCTYPE html>
 <html>
@@ -46,21 +48,17 @@ input[type=button]:hover {
 <%@ include file="/admin/inc/pagechange.jsp" %>
 
 function goDetail(adoptboard_id){ //상세보기 이동
-	location.href="/admin/adoptmanager/detail?adoptboard_id="+adoptboard_id;
+   location.href="/admin/adoptmanager/detail?adoptboard_id="+adoptboard_id;
 }
 function goRegist(){ //페이지 이동
-	location.href="/admin/adoptmanager/type"; 
+   location.href="/admin/adoptmanager/type"; 
 }
 </script>
 </head>
 <body>
 <form>
-<div class="loginName" style="text-align:right"><%-- <%=admin.getId() %> --%>님 로그인중</div>
-<button class="tablink" type="button"><i class="fas fa-user-friends" style="font-size:20px"></i>  회원관리</button> 
-<button class="tablink" type="button"><i class="fas fa-bullhorn" style="font-size:20px"></i>  제보관리</button>
-<button class="tablink" type="button"><i class="far fa-edit" style="font-size:20px"></i>  입양신청관리</button>
-<button class="tablink" type="button"><i class="far fa-comment-alt" 	style="font-size:20px"></i>  게시판관리</button>
-<button class="tablink" type="button"><i class="fas fa-dog" style="font-size:20px"></i>  입양게시물관리</button>
+<%@include file="/admin/inc/tablink.jsp" %>
+<div class="loginName" style="text-align:right"><%=admin.getId() %>님 로그인중</div>
 </form>
 <div id="AdoptManager" class="tabcontent">
   <h3>입양게시물 관리</h3>
@@ -74,23 +72,45 @@ function goRegist(){ //페이지 이동
     <th>상세보기</th>
   </tr>
 
-  <%for(int i=0;i<adoptboardList.size();i++){ %>
-  <%Adoptboard adoptboard=adoptboardList.get(i); %>
-  <%int num=adoptboardList.size(); %>
-	  <tr>
-	  	<td><%=adoptboard.getAdoptboard_id() %></td>
-	    <td><%=adoptboard.getAdoptdog().getType().getInfo() %></td>
-	    <td><%=adoptboard.getTitle() %></td>
-	    <td><%=adoptboard.getRegdate() %></td> 
-	    <td>
-	    	<input type="button" value="상세보기" onClick="goDetail(<%=adoptboard.getAdoptboard_id()%>)"/>
-	  </tr>
+   <%int num=pager.getNum(); %>
+   <%int curPos=pager.getCurPos(); %>
+   <%for(int i=0;i<pager.getPageSize();i++){ %>
+   <%if(num<1)break; %>
+     <%Adoptboard adoptboard=adoptboardList.get(curPos++); %>
+     <tr>
+        <td><%=num-- %></td>
+       <td><%=adoptboard.getAdoptdog().getType().getInfo() %></td>
+        <td><%=adoptboard.getTitle() %></td>
+       <td><%=adoptboard.getRegdate() %></td> 
+       <td>
+          <input type="button" value="상세보기" onClick="goDetail(<%=adoptboard.getAdoptboard_id()%>)"/>
+       </td>
+     </tr>
   <%} %>
-  
-	  <tr >
-	    <td colspan="5"><input type="button" value="글 쓰기" onClick="goRegist()"/></td>
-	  </tr>
-	  
+   <tr>
+      <td colspan="5" align="center">
+         <%if(pager.getFirstPage()-1>0){ %>
+         <a href="/admin/adoptboardList?currentPage=<%=pager.getFirstPage()-1%>">◀</a>
+         <%}else{ %>
+         <a href="javascript:alert('첫번째 페이지입니다');">◀</a>
+         <%} %>
+                   
+         <%for(int i=pager.getFirstPage();i<pager.getLastPage();i++){%>
+            <%if(i>pager.getTotalPage())break; %>
+            <a href="/admin/adoptboardList?currentPage=<%=i %>">[<%=i %>]</a>                 
+            <%} %>
+   
+            <%if(pager.getLastPage()+1<pager.getTotalPage()){ %>
+               <a href="/admin/adoptboardList?currentPage=<%=pager.getLastPage()+1%>">▶</a>
+               <%}else{ %>
+                  <a href="javascript:alert('마지막 페이지입니다!');">▶</a>
+         <%} %>
+      </td>
+   </tr>
+   <tr >
+     <td colspan="5"><input type="button" value="글 쓰기" onClick="goRegist()"/></td>
+   </tr>
+     
 </table> 
 
 <div></div>

@@ -41,6 +41,6 @@
 	
 	<update id="updateLostBoardImg" parameterType="LostBoardImg">
 		update lostboardimg set img = #{img}
-		where lostboardimg_id=#{lostboardimg_id}
+		where lostboard_id = #{lostboard.lostboard_id} and lostboardimg_id=#{lostboardimg_id}
 	</update>
 </mapper>

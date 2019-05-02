@@ -1,3 +1,4 @@
+<%@page import="com.aroundog.model.domain.FreeComment"%>
 <%@page import="com.aroundog.commons.Pager"%>
 <%@page import="com.aroundog.model.domain.FreeBoard"%>
 <%@page import="java.util.List"%>
@@ -6,6 +7,7 @@
 <%
 	Admin admin=(Admin)request.getSession().getAttribute("admin");
 	FreeBoard freeBoard=(FreeBoard)request.getAttribute("freeboard");
+	List fcList=(List)request.getAttribute("fcList");
 %>
 <!DOCTYPE html>
 <html>
@@ -22,7 +24,7 @@ integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zF
 <%@ include file="/admin/inc/maincss.jsp" %>
 
 #Board {background-color: orange;}
-body {font-family: Arial, Helvetica, sans-serif;}
+body {font-family: Arial, Helvetica, sans-serif; background-color: orange;}
 * {box-sizing: border-box;}
 
 input[type=text], select {
@@ -61,6 +63,7 @@ input[type=text], select {
 }
 .rowrow{
 	width:100%;
+	text-align:right;
 }
 .freecontent{
   width: 100%;
@@ -73,6 +76,73 @@ input[type=text], select {
   margin-bottom: 16px;
   resize: vertical;
 }
+* {
+  box-sizing: border-box;
+}
+
+/* Add a gray background color with some padding */
+
+
+/* Header/Blog Title */
+.header {
+  padding: 30px;
+  font-size: 40px;
+  text-align: center;
+
+}
+
+/* Create two unequal columns that floats next to each other */
+/* Left column */
+.leftcolumn {   
+  margin:auto;
+  width: 70%;
+}
+
+/* Right column */
+.rightcolumn {
+  float: left;
+  width: 25%;
+  padding-left: 20px;
+}
+
+/* Fake image */
+.fakeimg {
+  background-color: #aaa;
+  width: 100%;
+  padding: 20px;
+}
+
+/* Add a card effect for articles */
+.card {
+   background-color: white;
+   padding: 20px;
+   margin-top: 20px;
+}
+.mybt{
+	text-align:right;
+}
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Footer */
+.footer {
+  padding: 20px;
+  text-align: center;
+  background: #ddd;
+  margin-top: 20px;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn {   
+    width: 100%;
+    padding: 0;
+  }
+}
 </style>
 </head>
 <script>
@@ -81,17 +151,27 @@ input[type=text], select {
 function goList(){
 	location.href="/admin/freeboard";
 }
+function delByteam(team){
+	$("form[name='form-team']").attr({
+		action:"/admin/freecomment/del/"+team,
+		method:"GET"
+	});
+	$("form[name='form-team']").submit();
+}
+
+function delBycommentid(freecomment_id){
+	$("form[name='form-id']").attr({
+		action:"/admin/freecommentreply/del/"+freecomment_id,
+		method:"GET"
+	});
+	$("form[name='form-id']").submit();
+}
 </script>
 <body>
 <form>
-<div class="loginName" style="text-align:right"><%=admin.getName() %>님 로그인중</div>
-<button class="tablink" type="button"><i class="fas fa-user-friends" style="font-size:20px"></i>  회원관리</button> 
-<button class="tablink" type="button"><i class="fas fa-bullhorn" style="font-size:20px"></i>  제보관리</button>
-<button class="tablink" type="button"><i class="far fa-edit" style="font-size:20px"></i>  입양신청관리</button>
-<button class="tablink" type="button"><i class="far fa-comment-alt" 	style="font-size:20px"></i>  게시판관리</button>
-<button class="tablink" type="button"><i class="fas fa-dog" style="font-size:20px"></i>  입양게시물관리</button>
-<button class="tablink" type="button"><i class="fas fa-dog" style="font-size:20px"></i>  임보게시판관리</button>
+<%@include file="/admin/inc/tablink.jsp" %>
 </form>
+<div class="loginName" style="text-align:right"><%=admin.getId() %>님 로그인중</div>
 
 <div id="Board" class="tabcontent">
   <h3>자유게시판</h3>
@@ -103,7 +183,7 @@ function goList(){
 		    <label for="fname" class="freelabel">#</label>
 		    <input type="text" id="fname" name="firstname" value="<%=freeBoard.getFreeboard_id() %>" >
 		    <label for="lname" class="freelabel">Member_id</label>
-		    <input type="text" id="lname" name="lastname" value="<%=freeBoard.getMember() %>">
+		    <input type="text" id="lname" name="lastname" value="<%=freeBoard.getMember().getName() %>">
 	   </div>
 	   <div class="rowrow">
 		    <label for="lname" class="freelabel">Title</label>
@@ -116,12 +196,54 @@ function goList(){
 		    <textarea id="subject" class="freecontent"><%=freeBoard.getContent() %></textarea>
 		</div>	    
 		<div class="rowrow">
-		    <input type="button" value="목록으로" class="detailbutton" onClick="goList()">
+		    <input type="button" value="목록으로" class="detailbutton" onClick="goList()" >
 	    </div>
 	  </form>
 	</div>
   
 </div>
+
+<div class="header">
+  <h4>댓글</h4>
+</div>
+
+<div class="row" >
+  <div class="leftcolumn">
+  	<%if(fcList!=null){ %>
+	    <%for(int i=0;i<fcList.size();i++){ %>
+	    <%FreeComment freeComment=(FreeComment)fcList.get(i); %>
+		    <%if(freeComment.getDepth()==1){ %>
+		    <div class="card">
+		    <form name="form-team">
+		      <p><%=freeComment.getMember().getName() %>, <%=freeComment.getRegdate() %>  </p>
+		      <p>team : <%=freeComment.getTeam() %>, depth : <%=freeComment.getDepth() %></p>
+		      <div class="fakeimg" style="height:100px;"><%=freeComment.getContent() %></div>
+		      <input type="hidden" name="freeboard_id" value="<%=freeBoard.getFreeboard_id() %>">
+		      <div class="mybt">
+		      	<input type="button" value="삭제" class="detailbutton" onClick="delByteam(<%=freeComment.getTeam()%>)" >
+		      </div>
+		    </form>
+		    </div>  
+		    <%} %>
+		    <%if(freeComment.getDepth()==2){ %>
+		    <div class="card">
+		    <form name="form-id">
+		      <p><%=freeComment.getMember().getName() %>, <%=freeComment.getRegdate() %>  </p>
+		      <p>team : <%=freeComment.getTeam() %>, depth : <%=freeComment.getDepth() %>, REPLY</p>
+		      <div class="fakeimg" style="height:100px;"><%=freeComment.getContent() %></div>
+		      <input type="hidden" name="freeboard_id" value="<%=freeBoard.getFreeboard_id() %>">
+		      <div class="mybt">
+		      	<input type="button" value="삭제" class="detailbutton" onClick="delBycommentid(<%=freeComment.getFreeComment_id()%>)">
+		      </div>
+		    </form>
+		    </div>		      		    
+		    <%} %>
+	    <%} %>
+    <%} %>
+  </div>
+ </div>
+
+
 
   
 

@@ -108,73 +108,74 @@ public class LostBoardServiceImpl implements LostBoardService{
       return keyWordList;
    }
    
-	@Override
-	public void delete(int lostboard_id) throws DeleteFailException{
-		int result = lostBoardDAO.delete(lostboard_id);
-		if(result==0) {
-			throw new DeleteFailException("삭제 실패");
-		}		
-	}
+   @Override
+   public void delete(int lostboard_id) throws DeleteFailException{
+      int result = lostBoardDAO.delete(lostboard_id);
+      if(result==0) {
+         throw new DeleteFailException("삭제 실패");
+      }      
+   }
 
-	@Override
-	public void deleteImg(int lostboard_id,List<LostBoardImg> fileList,String realPath) throws DeleteFailException{
-		String[] oriList = new String[fileList.size()];
-		for(int i=0;i<oriList.length;i++) {
-			String oriName = fileList.get(i).getImg();
-			oriList[i]= oriName;
-		}
-		int result = lostBoardDAO.deleteImg(lostboard_id);
-		manager.deleteFile(oriList, realPath);
-		if(result ==0) {
-			throw new DeleteFailException("삭제 실패");
-		}
-	}
+   @Override
+   public void deleteImg(int lostboard_id,List<LostBoardImg> fileList,String realPath) throws DeleteFailException{
+      String[] oriList = new String[fileList.size()];
+      for(int i=0;i<oriList.length;i++) {
+         String oriName = fileList.get(i).getImg();
+         oriList[i]= oriName;
+      }
+      int result = lostBoardDAO.deleteImg(lostboard_id);
+      manager.deleteFile(oriList, realPath);
+      if(result ==0) {
+         throw new DeleteFailException("삭제 실패");
+      }
+   }
 
-	@Override
-	public void updateLostBoard(LostBoard lostBoard) throws EditFailException{
-		int result = lostBoardDAO.updateLostBoard(lostBoard);
-		if(result ==0) {
-			throw new EditFailException("수정 실패");
-		}
-	}
+   @Override
+   public void updateLostBoard(LostBoard lostBoard) throws EditFailException{
+      int result = lostBoardDAO.updateLostBoard(lostBoard);
+      if(result ==0) {
+         throw new EditFailException("수정 실패");
+      }
+   }
 
-	@Override
-	public void updateLostBoardImg(MultipartFile[] myFile,List<LostBoardImg> fileList,LostBoard lostBoard, String realPath,int lostboard_id) {
-		
-		String[] imgList = uploader.returnFilename(myFile, lostBoard, realPath);
-	      int result = 0;
-	      List<LostBoardImg> list = lostBoardDAO.selectImg(lostboard_id);
-		  for(int i=0;i<imgList.length;i++) {
-			  LostBoardImg lbi = list.get(i);
-			  lbi.setLostboard(lostBoard);
-			  lbi.setImg(imgList[i]);	      
-			  result = lostBoardDAO.updateLostBoardImg(lbi);		     
-	      }		
-		 String[] oriList = new String[fileList.size()];
-		 for(int i=0;i<oriList.length;i++) {
-			String oriName = fileList.get(i).getImg();
-			oriList[i]= oriName;
-			}
-		 manager.deleteFile(oriList, realPath);
-		 if (result == 0) { 
-			  throw new ReportFailException("수정 실패!!"); 
-		}
-	}
-	@Override
-	public LostBoard selectById(int lostboard_id) {
-		return lostBoardDAO.selectById(lostboard_id);
-	}
-	
-	// 관리자: 임시보호 게시물 삭제
-	@Transactional
-	public void deleteTransaction(int lostboard_id) throws DeleteFailException{
-		int result=lostBoardDAO.delete(lostboard_id); // 게시글 삭제 
-		int result2=dao.delete(lostboard_id); // 댓글 삭제
-		System.out.println("deleteTransaction 호출!!  result :"+result+", result2 : "+result2);
-		
-		if(result==0 || result2==0) {
-			throw new DeleteFailException("임시보호 게시글 삭제 실패");
-		}
-	}
+   @Override
+   public void updateLostBoardImg(MultipartFile[] myFile,List<LostBoardImg> fileList,LostBoard lostBoard, String realPath,int lostboard_id) {
+      
+      String[] imgList = uploader.returnFilename(myFile, lostBoard, realPath);
+         int result = 0;
+         List<LostBoardImg> list = lostBoardDAO.selectImg(lostboard_id);
+        for(int i=0;i<imgList.length;i++) {
+           LostBoardImg lbi = list.get(i);
+           lbi.setLostboard(lostBoard);
+           lbi.setImg(imgList[i]);         
+           result = lostBoardDAO.updateLostBoardImg(lbi);           
+         }      
+       String[] oriList = new String[fileList.size()];
+       for(int i=0;i<oriList.length;i++) {
+         String oriName = fileList.get(i).getImg();
+         oriList[i]= oriName;
+         }
+       manager.deleteFile(oriList, realPath);
+       if (result == 0) { 
+           throw new ReportFailException("수정 실패!!"); 
+      }
+   }
+   @Override
+   public LostBoard selectById(int lostboard_id) {
+      return lostBoardDAO.selectById(lostboard_id);
+   }
+   
+   // 관리자: 임시보호 게시물 삭제
+   @Transactional
+   public void deleteTransaction(int lostboard_id) throws DeleteFailException{
+      int result=lostBoardDAO.delete(lostboard_id); // 게시글 삭제 
+      int result2=dao.deleteByLostBoardId(lostboard_id); // 댓글 삭제
+      int result3= lostBoardDAO.deleteImg(lostboard_id); 
+      result3=1;
+      System.out.println("deleteTransaction 호출!!  result :"+result+", result2 : "+result2+", result3 : "+result3);
+      if(result==0 || result2==0 || result3==0) {
+         throw new DeleteFailException("임시보호 게시글 삭제 실패");
+      }
+   }
 
 }

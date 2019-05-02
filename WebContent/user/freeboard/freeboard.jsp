@@ -53,12 +53,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <script>
-function searchword(){
-	$("form").attr({
-		action:"/user/freeboard/search",
-		method:"GET"
-	});
-	$("form").submit();
+
+function wordsearch(){
+	if($("select[name='category']").val()=="title"){
+		$("form[name='form-search']").attr({
+			action:"/user/freeboard/searchTitle",
+			method:"GET"
+		});
+		$("form[name='form-search']").submit();
+	}else{
+		$("form[name='form-search']").attr({
+			action:"/user/freeboard/searchWriter",
+			method:"GET"
+		});
+		$("form[name='form-search']").submit();
+	}
 }
 </script>
 <body>
@@ -84,6 +93,7 @@ function searchword(){
 
 	<!-- Start Align Area -->
 	<!-- 제일 상단 이미지 -->
+
 	<div class="whole-wrap">
 		<div class="container">
 		
@@ -94,14 +104,14 @@ function searchword(){
 					<div class="single-sidebar-widget search-widget">
 						<!-- 셀렉 -->
 											
-						<form class="search-form" action="#">
+						<form class="search-form" name="form-search">
 							<div class="default-select" id="default-select"">
 								<select name="category">
 									<option value="title">제목</option>
 									<option value="writer">작성자</option>
 								</select>
-		                    <input placeholder="검색어 입력" name="searchWord" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Posts'" >
-		                    <button  type="button" onClick="searchword()"><i class="fa fa-search"></i></button>
+		                    <input placeholder="검색어 입력" name="searchword" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Posts'" >
+		                    <button  type="button" onClick="wordsearch()"><i class="fa fa-search"></i></button>
 							</div>
 		                </form>
 					</div>
@@ -116,6 +126,7 @@ function searchword(){
 							<div class="regdate">글등록일</div>
 							<div class="hit">조회수</div>
 						</div>
+						<form name="form-member">
 						<%int cnt=0; %>
 						<%int num=pager.getNum(); %>
 						<%int curPos=pager.getCurPos(); %>
@@ -123,6 +134,7 @@ function searchword(){
 						<%if(num<1)break; %>
 						<%FreeBoard freeBoard=freeBoardList.get(curPos++); %>
 						<div class="table-row">
+							<input type="hidden" name="member_id" value="<%=freeBoard.getMember().getMember_id()%>">
 							<div class="freeboard_id"><%=num-- %></div>
 							<div class="writer"><%=freeBoard.getMember().getName()%></div>
 							<div class="title" ><div id="category-name">[<%=freeBoard.getCategory() %>]</div>  <a href="/user/freeboard/detail/<%=freeBoard.getFreeboard_id() %>" id="aTag"><%=freeBoard.getTitle() %></a>
@@ -141,7 +153,7 @@ function searchword(){
 							<i class="material-icons" style="font-size:14px" id="lockIcon">lock_outline</i>							
 							<%} %>						
 							</div>
-							
+							</form>
 							<div class="regdate"><%=freeBoard.getRegdate() %></div>
 							<div class="hit"><%=freeBoard.getHit() %></div>
 						</div>
@@ -209,28 +221,28 @@ function searchword(){
 			<div class="section-top-border">
 				<div class="row gallery-item">
 					<div class="col-md-4">
-						<a href="/user/img/elements/0.jpg" class="img-pop-up"><div class="single-gallery-image" style="background: url(/user/img/elements/0.jpg);"></div></a>
+						<a href="/user/img/aroundog/9.jpg" class="img-pop-up"><div class="single-gallery-image" style="background: url(/user/img/aroundog/9.jpg);"></div></a>
 					</div>
 					<div class="col-md-4">
-						<a href="/user/img/elements/1.jpg" class="img-pop-up"><div class="single-gallery-image" style="background: url(/user/img/elements/1.jpg);"></div></a>
+						<a href="/user/img/aroundog/10.jpg" class="img-pop-up"><div class="single-gallery-image" style="background: url(/user/img/aroundog/10.jpg);"></div></a>
 					</div>
 					<div class="col-md-4">
-						<a href="/user/img/elements/2.jpg" class="img-pop-up"><div class="single-gallery-image" style="background: url(/user/img/elements/2.jpg);"></div></a>
+						<a href="/user/img/aroundog/11.jpg" class="img-pop-up"><div class="single-gallery-image" style="background: url(/user/img/aroundog/11.jpg);"></div></a>
 					</div>
 					<div class="col-md-6">
-						<a href="/user/img/elements/3.jpg" class="img-pop-up"><div class="single-gallery-image" style="background: url(/user/img/elements/3.jpg);"></div></a>
+						<a href="/user/img/aroundog/12.jpg" class="img-pop-up"><div class="single-gallery-image" style="background: url(/user/img/aroundog/12.jpg);"></div></a>
 					</div>
 					<div class="col-md-6">
-						<a href="/user/img/elements/4.jpg" class="img-pop-up"><div class="single-gallery-image" style="background: url(/user/img/elements/4.jpg);"></div></a>
+						<a href="/user/img/aroundog/13.jpg" class="img-pop-up"><div class="single-gallery-image" style="background: url(/user/img/aroundog/13.jpg);"></div></a>
 					</div>
 					<div class="col-md-4">
-						<a href="/user/img/elements/g6.jpg" class="img-pop-up"><div class="single-gallery-image" style="background: url(/user/img/elements/g6.jpg);"></div></a>
+						<a href="/user/img/aroundog/bot6.jpg" class="img-pop-up"><div class="single-gallery-image" style="background: url(/user/img/aroundog/bot6.jpg);"></div></a>
 					</div>
 					<div class="col-md-4">
-						<a href="/user/img/elements/g7.jpg" class="img-pop-up"><div class="single-gallery-image" style="background: url(/user/img/elements/g7.jpg);"></div></a>
+						<a href="/user/img/aroundog/bot4.jpg" class="img-pop-up"><div class="single-gallery-image" style="background: url(/user/img/aroundog/bot4.jpg);"></div></a>
 					</div>
 					<div class="col-md-4">
-						<a href="/user/img/elements/g8.jpg" class="img-pop-up"><div class="single-gallery-image" style="background: url(/user/img/elements/g8.jpg);"></div></a>
+						<a href="/user/img/aroundog/bot5.jpg" class="img-pop-up"><div class="single-gallery-image" style="background: url(/user/img/aroundog/bot5.jpg);"></div></a>
 					</div>
 				</div>
 			</div>
@@ -244,7 +256,7 @@ function searchword(){
 			
 			
 		</div>
-	</div>
+
 	<!-- End Align Area -->
 
 <!-- 여기가 제일 밑에 검은 about나오는 곳 -->

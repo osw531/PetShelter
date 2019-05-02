@@ -154,23 +154,48 @@ public class FreeBoardController {
 		return "redirect:/user/freeboard/detail/regist/"+freeboard_id;//리스트로 이동
 	}
 	
-	//검색하기
-	@RequestMapping(value="/user/freeboard/search", method=RequestMethod.GET)
-	public ModelAndView freeBoardSearch(String category,String searchword,HttpServletRequest request) {
+	//검색하기(제목)
+	@RequestMapping(value="/user/freeboard/searchTitle", method=RequestMethod.GET)
+	public ModelAndView freeBoardSearchTitle(String category,String searchword,HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("user/freeboard/freeboard");
 		System.out.println("서치 들어오니??");
+		System.out.println(searchword);
 		List searchList=null;
 		List fcList=freeCommentService.selectAll();
-		if(category.equals("writer")) {
-			searchList=freeBoardService.selectByWriter(searchword);
-		}else {		
-			searchList=freeBoardService.selectByTitle(searchword);
-		}
+
+		searchList=freeBoardService.selectByTitle(searchword);
+
 		pager.init(request, searchList.size());
 		for(int i=0;i<searchList.size();i++) {
 			FreeBoard freeBoard=(FreeBoard)searchList.get(i);
 			int member_id=freeBoard.getMember_id();
 			Member member=memberService.select(member_id);
+			freeBoard.setMember(member);
+		}
+		mav.addObject("freeBoardList", searchList);
+		mav.addObject("fcList", fcList);
+		mav.addObject("pager", pager);
+		
+		return mav;
+	}
+	
+	//검색하기(작성자)
+	@RequestMapping(value="/user/freeboard/searchWriter", method=RequestMethod.GET)
+	public ModelAndView freeBoardSearchWriter(String category,String searchword,HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("user/freeboard/freeboard");
+		System.out.println("작성자 서치 들어오니??");
+		Member member=memberService.selectByName(searchword);
+		List searchList=null;
+		List fcList=freeCommentService.selectAll();
+		int member_id=member.getMember_id();
+		searchList=freeBoardService.selectByWriter(member_id);
+
+
+		pager.init(request, searchList.size());
+		for(int i=0;i<searchList.size();i++) {
+			FreeBoard freeBoard=(FreeBoard)searchList.get(i);
+			member_id=freeBoard.getMember_id();
+			member=memberService.select(member_id);
 			freeBoard.setMember(member);
 		}
 		mav.addObject("freeBoardList", searchList);

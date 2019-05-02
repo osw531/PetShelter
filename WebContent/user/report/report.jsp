@@ -17,8 +17,74 @@
 .banner-areawon .overlay-bg {
   background-color: rgba(0, 0, 0, 0.4);
 }
+/*파일 업로드 꾸미기 */
+[type="file"] {
+  height: 0;
+  overflow: hidden;
+  width: 0;
+}
+
+[type="file"] + label {
+  background: #f15d22;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+	font-family: 'Poppins', sans-serif;
+	font-size: inherit;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  outline: none;
+  padding: 1rem 50px;
+  position: relative;
+  transition: all 0.3s;
+  vertical-align: middle;
+  
+  &:hover {
+    background-color: darken(#f15d22, 10%);
+  }
+  &.btn-2 {
+    background-color: #99c793;
+    border-radius: 50px;
+    overflow: hidden;
+    
+    &::before {
+      color: #fff;
+      content: "\f382";
+      font-family: "Font Awesome 5 Pro";
+      font-size: 100%;
+      height: 100%;
+      right: 130%;
+      line-height: 3.3;
+      position: absolute;
+      top: 0px;
+      transition: all 0.3s;
+    }
+
+    &:hover {
+      background-color: darken(#99c793, 30%);
+        
+      &::before {
+        right: 75%;
+      }
+    }
+  }
+}
 </style>
 <script>
+/*파일 업로드 꾸미기 */
+$(document).ready(function(){
+   $("input[type=file]").change(function(){
+	   var fileInput = document.getElementById("myFile");
+	   var files=fileInput.files;
+	   var file;
+	   for(var i=0;i<files.length;i++){
+		   file=files[i];
+		   $("#fileDiv").append('<div><label for="file">'+file.name+'</label><div>');
+	   }
+   });
+});
    //제출 기능 시작 ---------------------------
    $(function() {
       $("input[type='button']").click(function() {
@@ -170,13 +236,18 @@
                   </div>
                   <hr>
                   <!-- Google Map 끝 -->
-                  <div class="form-group" style="width: 100%">
+                  <div class="form-group" style="width: 100%" id="fileDiv">
                      <label for="note">상세내용</label>
                      <textarea class="form-control" name="content" rows="5"
                         placeholder="제보하려는 동물에 대해서 상세한 내용을 적어주세요" id="content"></textarea>
                      <hr>
-                     <input type="file"       name="myFile" multiple /> 
-                     <input type="button"   value="제보하기" class="primary-btn float-right" />
+                     <label>▶길 잃은 아이의 사진을 첨부해주세요!</label>
+                     <br>
+                     <label>&nbsp;※최대 3개</label>
+                     <br>
+                     <input type="file"     id="myFile" name="myFile" multiple /> 
+                     <label for="myFile" class="btn-2">upload</label>
+                     <input type="button"   value="제보하기" class="primary-btn float-right" />                
                   </div>
             </form>
          </div>
@@ -184,7 +255,7 @@
    </section>
    <!-- End Volunteer-form Area -->
 
-   <!-- start footer Area -->	
+   <!-- start footer Area -->   
    <%@include file="/user/inc/footer.jsp" %>
    <!-- End footer Area -->
    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7s3c6u5G3n7koVQkGfBn_qLQarZjjHlc&callback=myMap" />

@@ -28,14 +28,45 @@
 			============================================= -->
 			<link rel="stylesheet" href="/user/css/linearicons.css">
 			<link rel="stylesheet" href="/user/css/font-awesome.min.css">
-			<link rel="stylesheet" href="/user/css/bootstrap.css">
+			<link rel="stylesheet" href="/user/css/bootstrap2.css">
 			<link rel="stylesheet" href="/user/css/magnific-popup.css">
 			<link rel="stylesheet" href="/user/css/nice-select.css">							
 			<link rel="stylesheet" href="/user/css/animate.min.css">
 			<link rel="stylesheet" href="/user/css/owl.carousel.css">
-			<link rel="stylesheet" href="/user/css/main.css">
+			<link rel="stylesheet" href="/user/css/adopt.css">
+			<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' 
+			integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
 			
 <!-- 자바스크립트 부분 -->
+<style>
+.banner-area-min {
+  background: url(/user/img/aroundog/17.jpg) center;
+  background-size: cover;
+}
+
+.banner-area-min .primary-btn {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.banner-area-min .overlay-bg {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.text-table{
+	margin-top:100px;
+}
+.icon{
+	width:15%;
+	display:inline-block;
+}
+.ffont{
+	display:inline-block;
+}
+.ffont0{
+	display:inline-block;
+	color:blue;
+}
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 function goDetail(adoptboard_id){
@@ -45,46 +76,10 @@ function goDetail(adoptboard_id){
 			
 		</head>
 		<body>
-			  <header id="header" id="home">
-			    <div class="container main-menu">
-			    	<div class="row align-items-center justify-content-between d-flex">
-				      <div id="logo">
-				        <a href="index.html"><img src="/user/img/logo.png" alt="" title="" /></a>
-				      </div>
-				      <nav id="nav-menu-container">
-				        <ul class="nav-menu">
-				          <li class="menu-active"><a href="index.html">Home</a></li>
-				          <li><a href="about.html">About Us</a></li>
-				          <li><a href="cats.html">Cats</a></li>
-				          <li><a href="dogs.html">Dogs</a></li>
-				          <li><a href="volunteer.html">Volunteer</a></li>
-				          <li class="menu-has-children"><a href="">Blog</a>
-				            <ul>
-				              <li><a href="blog-home.html">Blog Home</a></li>
-				              <li><a href="blog-single.html">Blog Single</a></li>
-				            </ul>
-				          </li>						          
-				          <li><a href="contact.html">Contact</a></li>
-				          <li class="menu-has-children"><a href="">Dropdown</a>
-				            <ul>
-				              <li><a href="elements.html">Elements</a></li>	
-				              <li><a href="#">Item</a></li>
-				              <li class="menu-has-children"><a href="">Level 2</a>
-					            <ul>
-					              <li><a href="#">Item 1</a></li>
-					              <li><a href="#">Item 2</a></li>
-					            </ul>
-					          </li>	
-				            </ul>
-				          </li>				              
-				        </ul>
-				      </nav><!-- #nav-menu-container -->		    		
-			    	</div>
-			    </div>
-			  </header><!-- #header -->
+			<%@include file="/user/inc/header.jsp" %>
 
 			<!-- start banner Area -->
-			<section class="banner-area relative" id="home">	
+			<section class="banner-area-min relative" id="home">	
 				<div class="overlay overlay-bg"></div>
 				<div class="container">				
 					<div class="row d-flex align-items-center justify-content-center">
@@ -98,6 +93,13 @@ function goDetail(adoptboard_id){
 				</div>
 			</section>
 			<!-- End banner Area -->	
+			
+			<div class="text-table "><div><p style="text-align: center;"><strong><span style="color: rgb(64, 64, 64); font-size: 30px;">Aroundog 보호동물</span></strong></p></div></div>	
+			<div class="line_box holder" style="width:40%; text-align:center; margin-left:30%">
+				<hr style="border-top-width:3px; border-color:#000000;" />	</div>
+
+
+			
 				
 			<!-- Start cat-list Area -->
 			<section class="cat-list-area section-gap">
@@ -108,14 +110,29 @@ function goDetail(adoptboard_id){
 					<%Adoptboard board=adoptboardList.get(i); %>
 						<div class="col-lg-3 col-md-6">
 							<div class="single-cat-list"  onClick='goDetail(<%=board.getAdoptboard_id() %>)'>
-							  <img src="/user/data/dogs/<%=board.getAdoptdog().getImg() %>" alt="" class="img-fluid">
+							  <img src="/data/dogs/<%=board.getAdoptdog().getImg() %>" alt="" class="img-fluid">
 							  <div class="overlay">
 							    <div class="text"><%=board.getAdoptdog().getType().getInfo() %></div>
 							  </div>
 							</div>
+								<div>
+									<div class="icon"><i class='fas fa-home' style='font-size:24px; margin-right:20px;'></i></div>
+									<div class="ffont0">[센터보호]</div>
+								</div>
+								<div>
+									<div class="icon"><i class='fas fa-dog' style='font-size:24px; margin-right:20px;'></i></div>
+									<div class="ffont"><%=board.getAdoptdog().getAge()%>살</div>
+								</div>	
+								<div>
+									<div class="icon"><i class='fas fa-transgender' style='font-size:24px; margin-right:20px;'></i></div>
+									<div class="ffont"><%=board.getAdoptdog().getGender()%></div>
+								</div>	
+								<div>
+									<div class="icon"><i class='far fa-calendar-alt' style='font-size:24px; margin-right:20px;'></i></div>
+									<div class="ffont"><%=board.getRegdate().substring(0,10)%></div>
+								</div>		
 						</div>
 					<%} %>
-								
 					</div>
 				</div>	
 			</section>
@@ -125,93 +142,7 @@ function goDetail(adoptboard_id){
 														
 				
 			<!-- start footer Area -->		
-			<footer class="footer-area">
-				<div class="container">
-					<div class="row pt-120 pb-80">
-						<div class="col-lg-4 col-md-6">
-							<div class="single-footer-widget">
-								<h6>About Us</h6>
-								<p>
-									Few would argue that, despite the advanc ements off eminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-								</p>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-6">
-							<div class="single-footer-widget">
-								<h6>Useful Links</h6>
-								<div class="row">
-									<ul class="col footer-nav">
-										<li><a href="#">Home</a></li>
-										<li><a href="#">Service</a></li>
-										<li><a href="#">About</a></li>
-										<li><a href="#">Case Study</a></li>
-									</ul>
-									<ul class="col footer-nav">
-										<li><a href="#">Pricing</a></li>
-										<li><a href="#">Team</a></li>
-										<li><a href="#">Blog</a></li>
-									</ul>									
-								</div>
-							</div>
-						</div>						
-						<div class="col-lg-4  col-md-6">
-							<div class="single-footer-widget mail-chimp">
-								<h6 class="mb-20">Contact Us</h6>
-								<ul class="list-contact">
-									<li class="flex-row d-flex">
-										<div class="icon">
-											<span class="lnr lnr-home"></span>
-										</div>
-										<div class="detail">
-											<h4>Binghamton, New York</h4>
-											<p>
-												4343 Hinkle Deegan Lake Road
-											</p>
-										</div>	
-									</li>
-									<li class="flex-row d-flex">
-										<div class="icon">
-											<span class="lnr lnr-phone-handset"></span>
-										</div>
-										<div class="detail">
-											<h4>00 (953) 9865 562</h4>
-											<p>
-												Mon to Fri 9am to 6 pm
-											</p>
-										</div>	
-									</li>
-									<li class="flex-row d-flex">
-										<div class="icon">
-											<span class="lnr lnr-envelope"></span>
-										</div>
-										<div class="detail">
-											<h4>support@colorlib.com</h4>
-											<p>
-												Send us your query anytime!
-											</p>
-										</div>	
-									</li>																		
-								</ul>
-							</div>
-						</div>						
-					</div>
-				</div>
-				<div class="copyright-text">
-					<div class="container">
-						<div class="row footer-bottom d-flex justify-content-between">
-							<p class="col-lg-8 col-sm-6 footer-text m-0 text-white"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-							<div class="col-lg-4 col-sm-6 footer-social">
-								<a href="#"><i class="fa fa-facebook"></i></a>
-								<a href="#"><i class="fa fa-twitter"></i></a>
-								<a href="#"><i class="fa fa-dribbble"></i></a>
-								<a href="#"><i class="fa fa-behance"></i></a>
-							</div>
-						</div>						
-					</div>
-				</div>
-			</footer>
+			<%@include file="/user/inc/footer.jsp" %>
 			<!-- End footer Area -->	
 
 			<script src="js/vendor/jquery-2.2.4.min.js"></script>

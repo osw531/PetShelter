@@ -16,7 +16,7 @@
       List<LostBoardImg> thumbList = (List)request.getAttribute("thumbList");
    }
    if(request.getAttribute("lcList")!=null){
-	   List<LostComment> lcList = (List)request.getAttribute("lcList");
+      List<LostComment> lcList = (List)request.getAttribute("lcList");
    }
 %>
 <!DOCTYPE html>
@@ -98,12 +98,12 @@ $(function(){
                      
                      <!-- 댓글개수 -->
                      <c:forEach var="lcList" items="${lcList}">
-                     	<c:if test="${lcList.lostboard_id ==lostBoard.lostboard_id && lcList.depth==1}">
-                     		<c:set var="cnt" value="${cnt+1}"/>
-                     	</c:if>
+                        <c:if test="${lcList.lostboard_id ==lostBoard.lostboard_id && lcList.depth==1}">
+                           <c:set var="cnt" value="${cnt+1}"/>
+                        </c:if>
                      </c:forEach>
                      <c:if test="${cnt!=0}">
-                     	(${cnt})
+                        (${cnt})
                      </c:if>
                   </div>
                   <div class="visit">${lostBoard.type.info}</div>
@@ -141,7 +141,7 @@ $(function(){
    </div>
    <%@include file="/user/inc/tail.jsp"%>
    <!-- start footer Area -->
-	<%@include file="/user/inc/footer.jsp" %>
+   <%@include file="/user/inc/footer.jsp" %>
    <!-- End footer Area -->   
    
 </body>

@@ -14,7 +14,7 @@
           <li class="menu-active"><a href="/user/index.jsp">Home</a></li>
           <li><a href="/user/about.jsp">About Us</a></li>
           <li><a href="/user/notices">Notice</a></li>
-          <li><a href="dogs.html">Adoption</a></li>        
+          <li><a href="/user/adopt/adoptboardList">Adoption</a></li>        
           
           <li class="menu-has-children"><a href="">Board</a>
             <ul>
@@ -24,47 +24,19 @@
             </ul>
           </li>
           
-          
-          <li class="menu-has-children"><a href="">Members</a>
-            <ul>
-			<%if(member==null){ %>	
-            	<li><a href="/user/login/login.jsp">Login</a></li>
-            <%}else{ %>
-            	<li><a href="/user/member/logout">Logout</a></li>
-            	<li><a href="/user/report/report.jsp">Report</a></li>
-            <%} %>
-            	<li><a href="/user/member/regist.jsp">Join us</a></li>
-            </ul>
-          </li>
-          <%if(member==null){ %>		          
-	          <li><a href="contact.html">Contact</a></li>
-	          <li class="menu-has-children"><a href="">Dropdown</a>
-	            <ul>
-	              <li><a href="elements.html">Elements</a></li>	
-	              <li><a href="#">Item</a></li>
-	              <li class="menu-has-children"><a href="">Level 2</a>
-		            <ul>
-		              <li><a href="#">Item 1</a></li>
-		              <li><a href="#">Item 2</a></li>
-		            </ul>
-		          </li>	
-	            </ul>
-	          </li>
-          <%}else{ %>	
-	          <li style="color:white;"><a><%=member.getName() %></a></li>
-	          <li class="menu-has-children"><a href="">[ Logout ]</a>
-	            <ul>
-	              <li><a href="elements.html">Elements</a></li>	
-	              <li><a href="#">Item</a></li>
-	              <li class="menu-has-children"><a href="">Level 2</a>
-		            <ul>
-		              <li><a href="#">Item 1</a></li>
-		              <li><a href="#">Item 2</a></li>
-		            </ul>
-		          </li>	
-	            </ul>
-	          </li>
-          <%} %>	
+   
+          <%if(member==null){ %>
+               <li class="menu-has-children"><a href="/user/login/login.jsp">Login</a>
+             <li><a href="/user/member/regist.jsp">Join us</a></li>
+          <%}else{ %>   
+           <li class="menu-has-children"><a href=""><%=member.getName() %> 님</a>
+               <ul>
+                 <li><a href="#">MyPage</a></li>   
+                 <li><a href="/user/report/report.jsp">Report</a></li>
+               </ul>
+             </li>
+            <li class="menu-has-children"><a href="/user/member/logout">[ Logout ]</a>
+          <%} %>
           				              
         </ul>
       </nav><!-- #nav-menu-container -->		    		
