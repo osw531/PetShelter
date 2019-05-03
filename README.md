@@ -1,4 +1,4 @@
-# 이메일 처리
+# oracle -> mysql
 #
 ArounDogManager
 djfkdnsemehrm
