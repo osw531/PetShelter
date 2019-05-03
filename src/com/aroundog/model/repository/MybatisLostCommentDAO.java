@@ -31,8 +31,8 @@ public class MybatisLostCommentDAO implements LostCommentDAO{
       return sqlSessionTemplate.insert("LostComment.commentAdd", lostComment);
    }
    @Override
-   public int deleteByTeam(int team) {
-      return sqlSessionTemplate.delete("LostComment.deleteByTeam",team);
+   public int deleteByTeam(LostComment lostcomment) {
+      return sqlSessionTemplate.delete("LostComment.deleteByTeam",lostcomment);
    }
    @Override
    public int deleteByCommentId(int lostcomment_id) {
@@ -48,5 +48,14 @@ public class MybatisLostCommentDAO implements LostCommentDAO{
    public int deleteByLostBoardId(int lostboard_id) {
       return sqlSessionTemplate.delete("LostComment.deleteByLostboardId",lostboard_id);
    }
+@Override
+public List selectByboardId(int lostboard_id) {
+	List lostLost=sqlSessionTemplate.selectList("LostComment.selectByboardId", lostboard_id);
+	return lostLost;
+}
+@Override
+public int insertFirst(LostComment lostComment) {
+	return sqlSessionTemplate.insert("LostComment.insertFirst", lostComment);
+}
 
 }

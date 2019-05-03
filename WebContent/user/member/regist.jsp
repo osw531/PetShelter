@@ -65,7 +65,7 @@ function regist(){
                <h1 class="text-white">
                   회원가입         
                </h1>   
-               <p class="text-white link-nav"><a href="index.html">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="volunteer.html"> Become a Volunteer</a></p>
+              
             </div>   
          </div>
       </div>

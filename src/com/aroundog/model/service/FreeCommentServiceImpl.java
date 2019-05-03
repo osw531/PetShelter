@@ -40,9 +40,9 @@ public class FreeCommentServiceImpl implements FreeCommentService{
 	}
 
 	@Override
-	public FreeComment select(int freecomment_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List select(int freeboard_id) {
+		List freeList=freeCommentDAO.select(freeboard_id);
+		return freeList;
 	}
 
 	public void commentAdd(FreeComment freeComment) {
@@ -59,8 +59,8 @@ public class FreeCommentServiceImpl implements FreeCommentService{
 		}
 	}
 
-	public void deleteByTeam(int team) {
-		int result=freeCommentDAO.deleteByTeam(team);
+	public void deleteByTeam(FreeComment freeComment) {
+		int result=freeCommentDAO.deleteByTeam(freeComment);
 		if(result==0) {
 			throw new DeleteFailException("deleteByTeam 삭제  실패");
 		}	
@@ -71,6 +71,15 @@ public class FreeCommentServiceImpl implements FreeCommentService{
 		if(result==0) {
 			throw new DeleteFailException("deleteByCommentId 삭제  실패");
 		}
+	}
+
+	@Override
+	public void insertFirst(FreeComment freeComment) {
+		int result=freeCommentDAO.insertFirst(freeComment);
+		if(result==0) {
+			throw new DeleteFailException("deleteByCommentId 삭제  실패");
+		}
+		
 	}
 
 

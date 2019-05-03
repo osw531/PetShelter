@@ -21,7 +21,7 @@
                   <h6>바로가기</h6>
                   <div class="row">
                      <ul class="col footer-nav">
-                        <li><a href="/user/index.jsp">Home</a></li>
+                        <li><a href="/user/main">Home</a></li>
                         <li><a href="/user/about.jsp">About</a></li>
                      </ul>
                      <ul class="col footer-nav">

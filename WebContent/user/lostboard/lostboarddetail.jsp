@@ -114,7 +114,7 @@ function commentDelBycommentId(lostcomment_id){
  
  /*목록으로 */
 $(function() {
-   $($("input[type='button']")[2]).click(function() {
+   $("input[name='backList']").click(function() {
       location.href = "/user/lostboard/lostboardlist";
    });
 });
@@ -273,9 +273,9 @@ $(function() {
                      <%
                         if (member.getMember_id() == lostComment.getMember().getMember_id()) {
                      %>
-                     <input type="hidden" name=lostboard_id
-                        value="<%=lostBoard.getLostboard_id()%>"> <a
-                        class="btn-reply text-uppercase"
+                     <input type="hidden" name="team" 			 value="<%=lostComment.getTeam()%>"/>
+                     <input type="hidden" name="lostboard_id"    value="<%=lostBoard.getLostboard_id()%>"> 
+                     <a class="btn-reply text-uppercase"
                         onClick="commentDelByTeam(<%=lostComment.getTeam()%>)"> d e
                         l</a>
                      <%
@@ -369,6 +369,7 @@ $(function() {
             }
          %>
       </div>
+      
       <!-- 댓글 폼 -->
       <div class="comment-form">
          <h4>Leave a Comment</h4>
@@ -411,9 +412,9 @@ $(function() {
             <%
                }
             %>
-            <input type="button" value="목록으로" class="primary-btn float-right" />
          </div>
       </form>
+       <input type="button" value="목록으로"  name="backList" class="primary-btn float-right" />
    </section>
    <!-- End Volunteer-form Area -->
    <!-- 공통 부분 -->

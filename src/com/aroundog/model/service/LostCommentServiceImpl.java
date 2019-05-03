@@ -55,8 +55,8 @@ public class LostCommentServiceImpl implements LostCommentService{
    }
 
    @Override
-   public void deleteByTeam(int team) throws DeleteFailException{
-      int result = lostCommentDAO.deleteByTeam(team);
+   public void deleteByTeam(LostComment lostcomment) throws DeleteFailException{
+      int result = lostCommentDAO.deleteByTeam(lostcomment);
       if(result==0) {
          throw new DeleteFailException("삭제 실패 byTeam");
       }
@@ -73,4 +73,19 @@ public class LostCommentServiceImpl implements LostCommentService{
    public List select(int lostboard_id) {
       return lostCommentDAO.select(lostboard_id);
    }
+
+@Override
+public List selectByboardId(int lostboard_id) {
+	List lostList=lostCommentDAO.selectByboardId(lostboard_id);
+	return lostList;
+}
+
+@Override
+public void insertFirst(LostComment lostComment) throws DeleteFailException{
+	int result = lostCommentDAO.insertFirst(lostComment);
+    if(result ==0) {
+       throw new DeleteFailException("삭제 실패 by lostcomment_id");
+    }
+	
+}
 }

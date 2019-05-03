@@ -22,12 +22,13 @@ integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zF
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <style>
 <%@ include file="/admin/inc/maincss.jsp" %>
-body{background-color: orange;}
+body{background-color: white;}
 /* #User {background-color: red;}
 #Report {background-color: green;}
 #Adopt {background-color: blue;} */
-#Board {background-color: orange;}
+
 /* #AdoptManager {background-color: pink;} */
+
 input[type=button] {
   background-color: #4CAF50;
   color: white;

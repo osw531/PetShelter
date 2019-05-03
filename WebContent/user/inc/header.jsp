@@ -11,7 +11,7 @@
       </div>
       <nav id="nav-menu-container">
         <ul class="nav-menu">
-          <li class="menu-active"><a href="/user/index.jsp">Home</a></li>
+          <li class="menu-active"><a href="/user/main">Home</a></li>
           <li><a href="/user/about.jsp">About Us</a></li>
           <li><a href="/user/notices">Notice</a></li>
           <li><a href="/user/adopt/adoptboardList">Adoption</a></li>        

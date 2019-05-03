@@ -3,8 +3,8 @@
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
-	Admin admin=(Admin)request.getSession().getAttribute("admin");
-	List<Type> typeList=(List)request.getAttribute("typeList");
+   Admin admin=(Admin)request.getSession().getAttribute("admin");
+   List<Type> typeList=(List)request.getAttribute("typeList");
 %>
 
 <!DOCTYPE html>
@@ -52,24 +52,40 @@ input[type=button]:hover {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 $(function(){
-	CKEDITOR.replace('content');
-	
-	$($("input[type='button']")[0]).click(function(){
-		regist();
-	});
-	$($("input[type='button']")[1]).click(function(){
-		location.href="/admin/adoptboardList";
-	});
+   CKEDITOR.replace('content');
+   
+   $($("input[type='button']")[0]).click(function(){
+      regist();
+   });
+   $($("input[type='button']")[1]).click(function(){
+      location.href="/admin/adoptboardList";
+   });
+   
+    $("#myFile").change(function(e){
+       preview(e);//미리보기 함수 호출!!
+      });
 });
 
 function regist(){
-	$("form").attr({
-		method:"post",
-		action:"/admin/adoptmanager/regist"
-	});
-	$("form").submit();
+   $("form").attr({
+      method:"post",
+      action:"/admin/adoptmanager/regist"
+   });
+   $("form").submit();
 }
-
+//사진 미리보기
+function preview(e){
+         var reader=new FileReader();
+         reader.readAsDataURL(e.target.files[0]);//파일을 읽는 시점!! (파일읽기)
+         
+         reader.onload=function(){//파일 로드 이벤트 
+            var img=document.createElement("img");
+            img.style.width=200+"px";
+            img.src=this.result;//이미지의 소스는 reader가 보유하고 있음..
+            document.querySelector("img").remove();
+            document.querySelector("#view").appendChild(img);
+         };
+   }
 </script>
 </head>
 <body>
@@ -78,46 +94,47 @@ function regist(){
 
 <div class="container">
   <form enctype="multipart/form-data">
-		<div style="width:25%" >
-			<input type="file" name="adoptdog.myFile" />
-		</div>
-		
-		<div style="width:75%">
-		  <select name="adoptdog.type.type_id" style="width:60%">
-		      <option value="0">===종류 선택===</option>
-		      <%for(int i=0;i<typeList.size();i++){ %>
-			  <%Type type=typeList.get(i); %>
-		      <option value="<%=type.getType_id()%>"><%=type.getInfo()%></option>
-		      <%} %>
-		  </select>
-		  <select name="adoptdog.gender" style="width:60%">
-		      <option value="0">===성별 선택===</option>
-		      <option value="남아">남</option>
-		      <option value="여아">여</option>
-		  </select>
-		  <select name="adoptdog.vaccin_id" style="width:60%">
-		      <option value="0">===백신 유무 선택===</option>
-		      <option value="1">유</option>
-		      <option value="2">무</option>
-		  </select>
-		  <select name="adoptdog.neut_id" style="width:60%">
-		      <option value="0">===중성화  유무선택===</option>
-		      <option value="1">유</option>
-		      <option value="2">무</option>
-		  </select>
-	    <input type="text" name="adoptdog.age" placeholder="나이" style="width:60%">
-		</div>
+      <div style="width:25%" >
+         <div id="view" ><img  src=""></div>
+         <input type="file" id="myFile" name="adoptdog.myFile" />
+      </div>
+      
+      <div style="width:75%">
+        <select name="adoptdog.type.type_id" style="width:60%">
+            <option value="0">===종류 선택===</option>
+            <%for(int i=0;i<typeList.size();i++){ %>
+           <%Type type=typeList.get(i); %>
+            <option value="<%=type.getType_id()%>"><%=type.getInfo()%></option>
+            <%} %>
+        </select>
+        <select name="adoptdog.gender" style="width:60%">
+            <option value="0">===성별 선택===</option>
+            <option value="남아">남</option>
+            <option value="여아">여</option>
+        </select>
+        <select name="adoptdog.vaccin_id" style="width:60%">
+            <option value="0">===백신 유무 선택===</option>
+            <option value="1">유</option>
+            <option value="2">무</option>
+        </select>
+        <select name="adoptdog.neut_id" style="width:60%">
+            <option value="0">===중성화  유무선택===</option>
+            <option value="1">유</option>
+            <option value="2">무</option>
+        </select>
+       <input type="text" name="adoptdog.age" placeholder="나이" style="width:60%">
+      </div>
 
-		<div>
-		    <input type="text" name="title" placeholder="제목">
-		    <textarea id="subject" name="adoptdog.feature" placeholder="특이사항" style="height:100px"></textarea>
-		    <textarea id="subject" name="content" placeholder="상세페이지" style="height:600px"></textarea>
-		</div>
-		<br/>
-		<div>
-		    <input type="button" value="등록">
-	    	<input type="button" value="목록">
-		</div>
+      <div>
+          <input type="text" name="title" placeholder="제목">
+          <textarea id="subject" name="adoptdog.feature" placeholder="특이사항" style="height:100px"></textarea>
+          <textarea id="subject" name="content" placeholder="상세페이지" style="height:600px"></textarea>
+      </div>
+      <br/>
+      <div>
+          <input type="button" value="등록">
+          <input type="button" value="목록">
+      </div>
   </form>
 </div>
 

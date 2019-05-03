@@ -4,5 +4,5 @@
 %>
 <script>
 alert("로그아웃 되셨습니다!");
-location.href="/user/index.jsp";
+location.href="/user/main";
 </script>

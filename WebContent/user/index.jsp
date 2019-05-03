@@ -1,5 +1,9 @@
+<%@page import="com.aroundog.model.domain.Adoptboard"%>
+<%@page import="java.util.List"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
-
+<%
+	List adoptboardList= (List) request.getAttribute("adoptboardList");
+%>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 <head>
@@ -45,6 +49,11 @@
   background-color: rgba(0, 0, 0, 0.4);
 }
 </style>
+<script>
+function goAdopt(adoptboard_id){
+   location.href="/user/adopt/adoptboardDetail?adoptboard_id="+adoptboard_id;
+}   
+</script>
 </head>
 <body>
 <%@include file="/user/inc/header.jsp" %>
@@ -76,42 +85,12 @@
 		<div class="container">
 			<div class="row">
 				<div class="active-image-carusel">
-					<div class="single-image-carusel">
-						<img class="img-fluid" src="img/c1.jpg" alt="">
-					</div>
-					<div class="single-image-carusel">
-						<img class="img-fluid" src="img/c2.jpg" alt="">
-					</div>
-					<div class="single-image-carusel">
-						<img class="img-fluid" src="img/c3.jpg" alt="">
-					</div>
-					<div class="single-image-carusel">
-						<img class="img-fluid" src="img/c4.jpg" alt="">
-					</div>	
-					<div class="single-image-carusel">
-						<img class="img-fluid" src="img/c1.jpg" alt="">
-					</div>
-					<div class="single-image-carusel">
-						<img class="img-fluid" src="img/c2.jpg" alt="">
-					</div>
-					<div class="single-image-carusel">
-						<img class="img-fluid" src="img/c3.jpg" alt="">
-					</div>
-					<div class="single-image-carusel">
-						<img class="img-fluid" src="img/c4.jpg" alt="">
-					</div>
-					<div class="single-image-carusel">
-						<img class="img-fluid" src="img/c1.jpg" alt="">
-					</div>
-					<div class="single-image-carusel">
-						<img class="img-fluid" src="img/c2.jpg" alt="">
-					</div>
-					<div class="single-image-carusel">
-						<img class="img-fluid" src="img/c3.jpg" alt="">
-					</div>
-					<div class="single-image-carusel">
-						<img class="img-fluid" src="img/c4.jpg" alt="">
-					</div>															
+					<%for(int i=0;i<adoptboardList.size();i++){ %>
+              		 <%Adoptboard board= (Adoptboard)adoptboardList.get(i); %>
+	              		 <div class="single-image-carusel" onClick="goAdopt(<%=board.getAdoptboard_id()%>)">
+	                 		 <img class="img-fluid" src="/data/dogs/<%=board.getAdoptdog().getImg() %>" alt="">
+	              		 </div>
+              		 <%} %>   													
 				</div>
 			</div>
 		</div>	
@@ -139,17 +118,19 @@
 		<div class="container-fluid">
 			<div class="row align-items-center">	
 				<div class="col-lg-6 home-about-left no-padding">
-					<img src="img/about-img.jpg" alt="">
+					<img src="img/center.jpg" alt="">
 				</div>
 				<div class="col-lg-6 home-about-right no-padding">
-					<h1>
-						Globally Connected
-						by Large Network
-					</h1>
-					<h5>We are here to listen from you deliver exellence</h5>
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.
-					</p>
+					<h2>
+                	  ArounDog는 안락사 없는 <br>유기견 보호소를 지향합니다.
+             	  </h2>
+               	  <p><p>
+              	  <p>
+		                  한 해에 발생하는 유기견이 10만 마리에 달하고 있습니다.<br>
+		                  그중에서 안타깝게 주인을 만나지 못하고<br>안락사를 당하는 비율이 48%입니다.<br>
+		                  건강하고 편안한 환경에서<br>모든 강아지를 최선을 다해 돌보고 있습니다.<br><br>
+		                  부담없이 견학해보세요.<br>         
+               </p>
 				</div>
 			</div>
 		</div>	

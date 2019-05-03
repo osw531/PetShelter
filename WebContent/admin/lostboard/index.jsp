@@ -10,8 +10,8 @@
    Admin admin=(Admin)request.getSession().getAttribute("admin");
    List<LostBoard> lostboardList = (List)request.getAttribute("lostboardList");
    LostBoard lostboardSearch = (LostBoard)request.getAttribute("lostboardSearch");
-   Collections.reverse(lostboardList); // 리스트 배열의 순서를 거꾸로 바꿔준다
    Pager pager=(Pager)request.getAttribute("pager");
+   if(lostboardList!=null){Collections.reverse(lostboardList);} // 리스트 배열의 순서를 거꾸로 바꿔준다
 %>  
 
 <!DOCTYPE html>
@@ -41,6 +41,7 @@ function lostboardSearch(){
    var lostboard_id=$("input[name='lostboard_id']").val();
    
    location.href="/admin/lostboardSearch?lostboard_id="+lostboard_id;
+   
 }
 function goDetail(lostboard_id){
    window.open("/admin/lostboard?lostboard_id="+lostboard_id,"detail","width=450, height=600, scrollbars=1, menubar=0, top=100, left=400, location=0, resizable=no")
@@ -106,27 +107,27 @@ function getList(){
            <td><button class="btn btn-light" onClick="goDetail(<%=lostboard.getLostboard_id() %>)" type="button">상세보기</button></td>
          </tr>
          <%} %>
+         <tr>
+            <td colspan="6" align="center">
+            <%if(pager.getFirstPage()-1>0){ %>
+                  <a href="/admin/lostboardList?currentPage=<%=pager.getFirstPage()-1%>">◀</a>
+               <%}else{ %>
+                  <a href="javascript:alert('첫번째 페이지입니다');">◀</a>
+               <%} %>
+                         
+            <%for(int i=pager.getFirstPage();i<pager.getLastPage();i++){%>
+            <%if(i>pager.getTotalPage())break; %>
+            <a href="/admin/lostboardList?currentPage=<%=i %>">[<%=i %>]</a>                 
+            <%} %>
+               
+            <%if(pager.getLastPage()+1<pager.getTotalPage()){ %>
+                  <a href="/admin/lostboardList?currentPage=<%=pager.getLastPage()+1%>">▶</a>
+               <%}else{ %>
+                  <a href="javascript:alert('마지막 페이지입니다!');">▶</a>
+               <%} %>
+            </td>
+         </tr>
       <%} %>
-      <tr>
-         <td colspan="6" align="center">
-         <%if(pager.getFirstPage()-1>0){ %>
-               <a href="/admin/lostboardList?currentPage=<%=pager.getFirstPage()-1%>">◀</a>
-            <%}else{ %>
-               <a href="javascript:alert('첫번째 페이지입니다');">◀</a>
-            <%} %>
-                      
-         <%for(int i=pager.getFirstPage();i<pager.getLastPage();i++){%>
-         <%if(i>pager.getTotalPage())break; %>
-         <a href="/admin/lostboardList?currentPage=<%=i %>">[<%=i %>]</a>                 
-         <%} %>
-            
-         <%if(pager.getLastPage()+1<pager.getTotalPage()){ %>
-               <a href="/admin/lostboardList?currentPage=<%=pager.getLastPage()+1%>">▶</a>
-            <%}else{ %>
-               <a href="javascript:alert('마지막 페이지입니다!');">▶</a>
-            <%} %>
-         </td>
-      </tr>
     </tbody>
     </form> 
     

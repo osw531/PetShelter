@@ -30,7 +30,7 @@ integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zF
   
 <style>
 <%@ include file="/admin/inc/maincss.jsp" %>
-
+body{background-color: white;}
 #Adopt {background-color: white;}
 
 </style>

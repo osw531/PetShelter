@@ -55,6 +55,13 @@
 <script>
 
 function wordsearch(){
+
+	
+	if($("input[type='text']").val()==""){
+		alert("검색어를 입력하세요!");
+		return;
+	}
+	
 	if($("select[name='category']").val()=="title"){
 		$("form[name='form-search']").attr({
 			action:"/user/freeboard/searchTitle",
@@ -137,7 +144,26 @@ function wordsearch(){
 							<input type="hidden" name="member_id" value="<%=freeBoard.getMember().getMember_id()%>">
 							<div class="freeboard_id"><%=num-- %></div>
 							<div class="writer"><%=freeBoard.getMember().getName()%></div>
-							<div class="title" ><div id="category-name">[<%=freeBoard.getCategory() %>]</div>  <a href="/user/freeboard/detail/<%=freeBoard.getFreeboard_id() %>" id="aTag"><%=freeBoard.getTitle() %></a>
+							<%if(member==null){ %>
+								<%if(freeBoard.getSecret().equals("true")){ %>
+									<div class="title" ><div id="category-name">[<%=freeBoard.getCategory() %>]</div>  
+									<a href="javascript:alert('비공개글 입니다.');" id="aTag"><%=freeBoard.getTitle() %></a>
+								<%}else{ %>
+									<div class="title" ><div id="category-name">[<%=freeBoard.getCategory() %>]</div>  <a href="/user/freeboard/detail/<%=freeBoard.getFreeboard_id() %>" id="aTag"><%=freeBoard.getTitle() %></a>							
+								<%} %>
+							<%}else{ %>
+								<%if(freeBoard.getSecret().equals("true")){ %>
+									<%if(freeBoard.getMember().getMember_id()==member.getMember_id()){ %>
+										<div class="title" ><div id="category-name">[<%=freeBoard.getCategory() %>]</div>  
+										<a href="/user/freeboard/detail/<%=freeBoard.getFreeboard_id() %>" id="aTag"><%=freeBoard.getTitle() %></a>
+									<%}else{ %>
+										<div class="title" ><div id="category-name">[<%=freeBoard.getCategory() %>]</div>  
+										<a href="javascript:alert('비공개글 입니다.');" id="aTag"><%=freeBoard.getTitle() %></a>
+									<%} %>
+	 							<%}else{ %>
+									<div class="title" ><div id="category-name">[<%=freeBoard.getCategory() %>]</div>  <a href="/user/freeboard/detail/<%=freeBoard.getFreeboard_id() %>" id="aTag"><%=freeBoard.getTitle() %></a>				 
+								<%} %>
+ 							<%} %>
 							<%for(int j=0;j<fcList.size();j++){ %>
 							<%FreeComment freeComment=fcList.get(j); %>
 							<%if(freeComment.getFreeboard_id()==freeBoard.getFreeboard_id() && freeComment.getDepth()==1){ 

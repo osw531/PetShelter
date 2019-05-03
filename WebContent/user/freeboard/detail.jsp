@@ -5,6 +5,7 @@
 <%
 	FreeBoard freeboard=(FreeBoard)request.getAttribute("freeboard");
 	List fcList=(List)request.getAttribute("fcList");
+	List freeboardList=(List)request.getAttribute("freeboardList");
 %>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
@@ -113,18 +114,19 @@ function boardEdit(freeboard_id){
 	});
 	$("form[name='form-edit']").submit();
 }
+
 //게시물 삭제
 function boardDel(freeboard_id){
 	if(!confirm("게시물을 삭제하시겠습니까?")){
 		return;
 	}
-	//메소드 delete안써짐 모르겠음 질문 ㅠ
 	$("form[name='form-edit']").attr({
 		action:"/user/freeboard/del/"+freeboard_id,
 		method:"GET"
 	});
 	$("form[name='form-edit']").submit();
 }
+
 //댓글 삭제 밑에 대댓글도 함께 삭제
 function commentDelByTeam(team){
 	if(!confirm("댓글을 삭제하시겠습니까?")){
@@ -149,6 +151,9 @@ function commentDelBycommentId(freecomment_id){
 }
 function goList(){
 	location.href="/user/freeboards";
+}
+function otherDetail(freeboard_id){
+	location.href="/user/freeboard/detail/"+freeboard_id;
 }
 </script>
 <body class="blog-page">	
@@ -212,28 +217,73 @@ function goList(){
 					</div>
 					<div class="navigation-area">
 						<div class="row">
-							<div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
-								<div class="thumb">
-									<a href="#"><img class="img-fluid" src="/user/img/aroundog/dogleft.jpg" alt=""></a>
+						<%for(int i=0;i<freeboardList.size();i++){ %>
+                  		<% FreeBoard freeBoard2=(FreeBoard)freeboardList.get(i);%>
+                  		<%if(freeboard.getFreeboard_id()==freeBoard2.getFreeboard_id()){ %>
+                  			<%if(i==0){ %>
+                        	<%FreeBoard nextBoard=(FreeBoard)freeboardList.get(i+1); %>
+								<div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
 								</div>
-								<div class="arrow">
-									<a href="#"><span class="lnr text-white lnr-arrow-left" style='font-size:36px'></span></a>
+								<div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+									<div class="detials">
+										<p>다음글</p>									
+										<a href="#" onClick="otherDetail(<%=nextBoard.getFreeboard_id()%>)"><h4><%=nextBoard.getTitle() %></h4></a>
+									</div>
+									<div class="arrow">
+										<a href="#" onClick="otherDetail(<%=nextBoard.getFreeboard_id()%>)"><span class="lnr text-white lnr-arrow-right" style='font-size:36px'></span></a>
+									</div>
+									<div class="thumb">
+										<a href="#" onClick="otherDetail(<%=nextBoard.getFreeboard_id()%>)"><img class="img-fluid" src="/user/img/aroundog/dogright.jpg" alt=""></a>
+									</div>										
 								</div>
-								<div class="detials">									
-									<a href=""><h4>Prev Post</h4></a>
+							<%} %>         
+                        	<%if(i>0 && i<freeboardList.size()-1){ %>
+								<%FreeBoard preBoard=(FreeBoard)freeboardList.get(i-1); %>
+                                <%FreeBoard nextBoard=(FreeBoard)freeboardList.get(i+1); %>
+	                                <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+										<div class="thumb">
+											<a href="#" onClick="otherDetail(<%=preBoard.getFreeboard_id()%>)"><img class="img-fluid" src="/user/img/aroundog/dogleft.jpg" alt=""></a>
+										</div>
+										<div class="arrow">
+											<a href="#" onClick="otherDetail(<%=preBoard.getFreeboard_id()%>)"><span class="lnr text-white lnr-arrow-left" style='font-size:36px'></span></a>
+										</div>
+										<div class="detials">
+											<p>이전글</p>									
+											<a href="" onClick="otherDetail(<%=preBoard.getFreeboard_id()%>)"><h4><%=preBoard.getTitle() %></h4></a>
+										</div>
+									</div>
+									<div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+										<div class="detials">
+											<p>다음글</p>									
+											<a href="#" onClick="otherDetail(<%=nextBoard.getFreeboard_id()%>)"><h4><%=nextBoard.getTitle() %></h4></a>
+										</div>
+										<div class="arrow">
+											<a href="#" onClick="otherDetail(<%=nextBoard.getFreeboard_id()%>)"><span class="lnr text-white lnr-arrow-right" style='font-size:36px'></span></a>
+										</div>
+										<div class="thumb">
+											<a href="#" onClick="otherDetail(<%=nextBoard.getFreeboard_id()%>)"><img class="img-fluid" src="/user/img/aroundog/dogright.jpg" alt=""></a>
+										</div>										
+									</div>
+                                
+							<%} %>
+                        	<%if(i==freeboardList.size()-1){ %>   
+                                <%FreeBoard preBoard=(FreeBoard)freeboardList.get(i-1); %>
+                                <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+									<div class="thumb">
+										<a href="#" onClick="otherDetail(<%=preBoard.getFreeboard_id()%>)"><img class="img-fluid" src="/user/img/aroundog/dogleft.jpg" alt=""></a>
+									</div>
+									<div class="arrow">
+										<a href="#" onClick="otherDetail(<%=preBoard.getFreeboard_id()%>)"><span class="lnr text-white lnr-arrow-left" style='font-size:36px'></span></a>
+									</div>
+									<div class="detials">
+										<p>이전글</p>									
+										<a href="" onClick="otherDetail(<%=preBoard.getFreeboard_id()%>)"><h4><%=preBoard.getTitle() %></h4></a>
+									</div>
 								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
-								<div class="detials">									
-									<a href=""><h4>Next Post</h4></a>
-								</div>
-								<div class="arrow">
-									<a href="#"><span class="lnr text-white lnr-arrow-right" style='font-size:36px'></span></a>
-								</div>
-								<div class="thumb">
-									<a href="#"><img class="img-fluid" src="/user/img/aroundog/dogright.jpg" alt=""></a>
-								</div>										
-							</div>									
+                                
+                            <%} %>
+						<%} %>
+                   		<%} %>									
 						</div>
 					</div>
 					
@@ -273,6 +323,7 @@ function goList(){
 	                                	<%if(member!=null){ %>
 										<%if(member.getMember_id()==freeComment.getMember().getMember_id()){ %>
 											<input type="hidden" name="freeboard_id" value="<%=freeboard.getFreeboard_id()%>">
+											<input type="hidden" name="team" value="<%=freeComment.getTeam()%>">
 	                                		<a class="btn-reply text-uppercase" onClick="commentDelByTeam(<%=freeComment.getTeam()%>)"> d e l</a>									
 	                                	<%}%>
 	                                	<%}%>

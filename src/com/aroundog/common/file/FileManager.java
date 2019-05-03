@@ -25,9 +25,9 @@ public class FileManager {
 		long time=System.currentTimeMillis();
 		String filename=time+"."+getExt(ori.getName()); //파일이름
 		boolean result=ori.renameTo(new File(dir+"/"+filename));
-		if(result==false) {
-			filename=null;
-		}
+		/*
+		 * if(result==false) { filename=null; }
+		 */
 		return filename;
 	}
 	
@@ -42,6 +42,7 @@ public class FileManager {
            File file = new File(dir+"/"+fileList[i]);
            if(file.exists()) {
               if(file.delete()) {
+                 System.out.println(fileList[i]+" 파일 삭제 성공");
               }else {
                  System.out.println(fileList[i]+" 파일 삭제 실패");
               }
@@ -50,4 +51,24 @@ public class FileManager {
            }
         }
      }
+    //1개 파일 지우기
+    public void deleteFile(String fileName, String dir) {
+          File file = new File(dir+"/"+fileName);
+          if(file.exists()) {
+             if(file.delete()) {
+                System.out.println(file+" 파일 삭제 성공");
+             }else {
+                System.out.println(file+" 파일 삭제 실패");
+             }
+          }else {
+             System.out.println("파일이 존재하지 않습니다.");
+          }
+    }
+		
+		/*
+		public static void main(String[] args) {
+			FileManager fm=new FileManager();
+			System.out.println(fm.getExt("지난여름.jpg")); 
+		}
+		*/
 }

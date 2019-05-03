@@ -219,6 +219,7 @@ function delBycommentid(freecomment_id){
 		      <p>team : <%=freeComment.getTeam() %>, depth : <%=freeComment.getDepth() %></p>
 		      <div class="fakeimg" style="height:100px;"><%=freeComment.getContent() %></div>
 		      <input type="hidden" name="freeboard_id" value="<%=freeBoard.getFreeboard_id() %>">
+		      <input type="hidden" name="team" value="<%=freeComment.getTeam()%>">
 		      <div class="mybt">
 		      	<input type="button" value="삭제" class="detailbutton" onClick="delByteam(<%=freeComment.getTeam()%>)" >
 		      </div>

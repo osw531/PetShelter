@@ -31,8 +31,8 @@
   color: #fff;
   cursor: pointer;
   display: inline-block;
-	font-family: 'Poppins', sans-serif;
-	font-size: inherit;
+   font-family: 'Poppins', sans-serif;
+   font-size: inherit;
   font-weight: 600;
   margin-bottom: 1rem;
   outline: none;
@@ -76,13 +76,13 @@
 /*파일 업로드 꾸미기 */
 $(document).ready(function(){
    $("input[type=file]").change(function(){
-	   var fileInput = document.getElementById("myFile");
-	   var files=fileInput.files;
-	   var file;
-	   for(var i=0;i<files.length;i++){
-		   file=files[i];
-		   $("#fileDiv").append('<div><label for="file">'+file.name+'</label><div>');
-	   }
+      var fileInput = document.getElementById("myFile");
+      var files=fileInput.files;
+      var file;
+      for(var i=0;i<files.length;i++){
+         file=files[i];
+         $("#fileDiv").append('<div><label for="file">'+file.name+'</label><div>');
+      }
    });
 });
    //제출 기능 시작 ---------------------------

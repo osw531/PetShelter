@@ -87,7 +87,7 @@ function goDetail(adoptboard_id){
 							<h1 class="text-white">
 								사랑스러운 아이들이 보호자님을 기다리고 있어요			
 							</h1>	
-							<p class="text-white link-nav"><a href="index.html">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="dogs.html"> dogs</a></p>
+							
 						</div>	
 					</div>
 				</div>

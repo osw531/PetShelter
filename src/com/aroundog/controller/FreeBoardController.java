@@ -7,12 +7,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.aroundog.common.exception.EditFailException;
 import com.aroundog.commons.Pager;
 import com.aroundog.model.domain.FreeBoard;
 import com.aroundog.model.domain.FreeComment;
@@ -34,6 +37,7 @@ public class FreeBoardController {
 	
 	
 	//자유게시판 페이지 가져오기
+	@Transactional("transactionManager")
 	@RequestMapping(value="/user/freeboards",method=RequestMethod.GET)
 	public ModelAndView freeBoardChangePage(@RequestParam(value="currentPage", defaultValue="1" , required=false) int currentPage,HttpServletRequest request) {	
 		ModelAndView mav = new ModelAndView("user/freeboard/freeboard");
@@ -62,11 +66,13 @@ public class FreeBoardController {
 	}
 	
 	//자유게시판 상세정보 보기  트랜잭션 처리 필요
+	@Transactional("transactionManager")
 	@RequestMapping(value="/user/freeboard/detail/{freeboard_id}", method=RequestMethod.GET)
 	public ModelAndView detail(@PathVariable("freeboard_id") int freeboard_id) {
 		List fcList = new ArrayList();
 		freeBoardService.updateHitCnt(freeboard_id);//히트카운터 올리기
 		FreeBoard freeboard=freeBoardService.select(freeboard_id);
+		List freeboardList=freeBoardService.selectAll();
 		//보드에 멤버 담기
 		int member_id=freeboard.getMember_id();
 		Member member=memberService.select(member_id);
@@ -87,11 +93,13 @@ public class FreeBoardController {
 		ModelAndView mav = new ModelAndView("user/freeboard/detail");
 		mav.addObject("freeboard", freeboard);
 		mav.addObject("fcList", fcList);
+		mav.addObject("freeboardList", freeboardList);
 		return mav;
 	}
 	
 	
 	//자유게시판 상세에서 댓글 등록 후 다시 상세창으로  트랜잭션 처리 필요
+	@Transactional("transactionManager")
 	@RequestMapping(value="/user/freeboard/detail/regist/{freeboard_id}", method=RequestMethod.GET)
 	public ModelAndView registAndDetail(@PathVariable("freeboard_id") int freeboard_id) {
 		List fcList = new ArrayList();
@@ -100,7 +108,7 @@ public class FreeBoardController {
 		int member_id=freeboard.getMember_id();
 		Member member=memberService.select(member_id);
 		freeboard.setMember(member);
-		
+		List freeboardList=freeBoardService.selectAll();
 		List allfcList=freeCommentService.selectAll();
 		
 		//내 보드에 댓글 골라내기 위하여
@@ -116,6 +124,7 @@ public class FreeBoardController {
 		ModelAndView mav = new ModelAndView("user/freeboard/detail");
 		mav.addObject("freeboard", freeboard);
 		mav.addObject("fcList", fcList);
+		mav.addObject("freeboardList", freeboardList);
 		return mav;
 	}
 	
@@ -128,6 +137,7 @@ public class FreeBoardController {
 	
 	//자유게시판 한건 삭제하기 밑에 댓글도 자 지워야함~(캐스캐이드로 한방에 지울수 있지만 지금은 포린키를 연결 안해놔서 하나하나 다해줘야함)
 	//나중에 연결하면 프리보드매퍼에서 sql cascade로 수정하면 됨
+	@Transactional("transactionManager")
 	@RequestMapping(value="/user/freeboard/del/{freeboard_id}", method=RequestMethod.GET)
 	public String freeBoardDel(@PathVariable("freeboard_id") int freeboard_id) {
 		freeBoardService.delete(freeboard_id); //자유게시판 한건삭제
@@ -136,6 +146,7 @@ public class FreeBoardController {
 	}
 	
 	//한건 수정하기 위해 edit.jsp로 프리보드 담아서 이동
+	@Transactional("transactionManager")
 	@RequestMapping(value="/user/freeboard/edit/{freeboard_id}", method=RequestMethod.GET)
 	public ModelAndView freeBoardEditPage(@PathVariable("freeboard_id") int freeboard_id) {
 		ModelAndView mav = new ModelAndView("user/freeboard/edit");
@@ -155,10 +166,10 @@ public class FreeBoardController {
 	}
 	
 	//검색하기(제목)
+	@Transactional("transactionManager")
 	@RequestMapping(value="/user/freeboard/searchTitle", method=RequestMethod.GET)
 	public ModelAndView freeBoardSearchTitle(String category,String searchword,HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("user/freeboard/freeboard");
-		System.out.println("서치 들어오니??");
 		System.out.println(searchword);
 		List searchList=null;
 		List fcList=freeCommentService.selectAll();
@@ -180,10 +191,10 @@ public class FreeBoardController {
 	}
 	
 	//검색하기(작성자)
+	@Transactional("transactionManager")
 	@RequestMapping(value="/user/freeboard/searchWriter", method=RequestMethod.GET)
 	public ModelAndView freeBoardSearchWriter(String category,String searchword,HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("user/freeboard/freeboard");
-		System.out.println("작성자 서치 들어오니??");
 		Member member=memberService.selectByName(searchword);
 		List searchList=null;
 		List fcList=freeCommentService.selectAll();
@@ -205,6 +216,12 @@ public class FreeBoardController {
 		return mav;
 	}
 
+	@ExceptionHandler(EditFailException.class)
+	public ModelAndView freeBoardEditFail(EditFailException e) {
+		ModelAndView mav= new ModelAndView("admin/error/lostError");
+		mav.addObject("err", e.getMessage());
+		return mav;
+	}
 	 
 	
 }

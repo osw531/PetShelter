@@ -104,6 +104,9 @@ $(function(){
                      </c:forEach>
                      <c:if test="${cnt!=0}">
                         (${cnt})
+                        <c:set var="cnt" value="0"/>
+                     </c:if>
+                     <c:if test="">
                      </c:if>
                   </div>
                   <div class="visit">${lostBoard.type.info}</div>
